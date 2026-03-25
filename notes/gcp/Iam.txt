@@ -1,0 +1,92 @@
+IAM Roles and Policies for Data Services
+========================================
+
+Introduction
+------------
+Identity and Access Management (IAM) in Google Cloud controls who can access
+resources and what actions they can perform. For data services like BigQuery,
+Cloud Storage, Pub/Sub, Dataflow, and Dataproc, IAM ensures secure and
+fine-grained access control.
+
+Key Concepts
+------------
+- Principal: The identity (user, group, service account).
+- Role: Collection of permissions (predefined or custom).
+- Policy: Binding of principals to roles for specific resources.
+- Resource Hierarchy: Organization → Folder → Project → Dataset/Table.
+
+Types of Roles
+--------------
+1. Primitive Roles:
+   - Viewer: Read-only access.
+   - Editor: Read and write access.
+   - Owner: Full control, including IAM management.
+
+2. Predefined Roles (Service-specific):
+   - BigQuery Data Viewer: Read access to datasets/tables.
+   - BigQuery Data Editor: Read/write access to datasets/tables.
+   - BigQuery Admin: Full control over BigQuery resources.
+   - Storage Object Viewer: Read access to Cloud Storage objects.
+   - Pub/Sub Subscriber: Read messages from subscriptions.
+   - Dataflow Developer: Create and run Dataflow jobs.
+   - Dataproc Editor: Manage Dataproc clusters and jobs.
+
+3. Custom Roles:
+   - Created by administrators to meet specific requirements.
+   - Example: Role with only SELECT permission on BigQuery tables.
+
+IAM Policies
+------------
+- Define which principals have which roles on which resources.
+- Policies are inherited down the resource hierarchy.
+- Example Policy Binding:
+  {
+    "role": "roles/bigquery.dataViewer",
+    "members": ["user:analyst@example.com"]
+  }
+
+Examples for Data Services
+--------------------------
+BigQuery:
+- Grant dataset-level access:
+  GRANT roles/bigquery.dataViewer ON DATASET my_dataset TO 'user:analyst@example.com';
+
+Cloud Storage:
+- Grant bucket-level access:
+  gsutil iam ch user:developer@example.com:roles/storage.objectViewer gs://my-bucket
+
+Pub/Sub:
+- Grant subscription access:
+  gcloud pubsub subscriptions add-iam-policy-binding my-subscription \
+    --member=user:consumer@example.com \
+    --role=roles/pubsub.subscriber
+
+Dataflow:
+- Grant job creation access:
+  gcloud projects add-iam-policy-binding my-project \
+    --member=user:engineer@example.com \
+    --role=roles/dataflow.developer
+
+Best Practices
+--------------
+1. Principle of Least Privilege:
+   - Grant only the permissions required for a role.
+2. Use Predefined Roles:
+   - Prefer service-specific roles over primitive roles.
+3. Use Groups and Service Accounts:
+   - Assign roles to groups or service accounts instead of individuals.
+4. Audit and Monitor:
+   - Regularly review IAM policies and logs.
+5. Separate Duties:
+   - Avoid giving full admin rights to all users.
+6. Use Row-level and Column-level Security:
+   - Combine IAM with fine-grained access in BigQuery.
+7. Automate Policy Management:
+   - Use Infrastructure as Code (Terraform, Deployment Manager).
+
+Summary
+-------
+IAM roles and policies provide secure, fine-grained access control for
+Google Cloud data services. By using predefined roles, custom roles,
+and best practices like least privilege and auditing, organizations
+can protect sensitive data while enabling efficient collaboration.

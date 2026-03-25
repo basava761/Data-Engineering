@@ -1,0 +1,72 @@
+DAG EXECUTION WITH DATAPROC + HIVE
+==================================
+
+1. DAG DEFINITION
+   - A Python DAG is created in Airflow (Cloud Composer).
+   - It defines tasks such as:
+       * Launching a Dataproc cluster
+       * Submitting Hive queries
+       * Processing data stored in GCS or HDFS
+       * Storing results back into GCS or BigQuery
+
+2. UPLOAD TO COMPOSER
+   - The DAG file is placed in the Composer environment’s "dags/" folder.
+   - Composer syncs DAGs to the Airflow scheduler.
+
+3. SCHEDULER ROLE
+   - The Airflow scheduler parses the DAG.
+   - It determines when Hive/Dataproc tasks should run.
+   - Runnable tasks are placed into the task queue.
+
+4. DATAPROC INTERACTION
+   - Airflow uses operators like `DataprocSubmitJobOperator`.
+   - A Dataproc cluster (managed Hadoop/Spark) is created or reused.
+   - Jobs (Hive queries, Spark scripts) are submitted to the cluster.
+
+5. HIVE INTERACTION
+   - Hive queries are executed on top of Dataproc.
+   - Hive reads data from GCS buckets or HDFS.
+   - It performs transformations, aggregations, or joins.
+   - Results are written back to GCS or directly into BigQuery.
+
+6. STORAGE & OUTPUT
+   - Input data: Stored in GCS buckets or HDFS.
+   - Intermediate results: Managed by Hive tables.
+   - Final results: Exported to GCS or loaded into BigQuery.
+
+7. MONITORING & LOGGING
+   - Logs are captured in Cloud Logging.
+   - DAG run status and Hive query results are visible in the Airflow Web UI.
+
+-----------------------------------
+PICTORIAL TEXT DIAGRAM
+-----------------------------------
+
+[ DAG File (Python) ]
+        |
+        v
+[ Airflow Scheduler ]
+        |
+        v
+[ Task Queue ] -------------------------------
+        |                                    |
+        v                                    v
+[ Dataproc Cluster ]                  [ Hive Query Execution ]
+        |                                    |
+        v                                    v
+[ GCS Buckets / HDFS ] ----------------> [ Hive Tables / Results ]
+                                                   |
+                                                   v
+                                          [ BigQuery Dataset/Table ]
+                                                   |
+                                                   v
+                                          [ Analytics / Reports ]
+
+-----------------------------------
+SUMMARY
+-----------------------------------
+- DAG defines WHEN and HOW Dataproc + Hive jobs run.
+- Dataproc provides the Hadoop/Spark cluster infrastructure.
+- Hive provides SQL-like querying on large datasets.
+- GCS/HDFS act as storage layers for input/output.
+- BigQuery is often the final destination for analytics.

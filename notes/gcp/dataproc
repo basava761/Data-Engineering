@@ -1,0 +1,38 @@
+Google Cloud Dataproc Notes
+===========================
+
+Overview:
+---------
+Dataproc is a managed service for running Apache Spark, Apache Hadoop, and other
+open-source big data frameworks on Google Cloud. It simplifies cluster creation,
+management, and scaling.
+
+Key Characteristics:
+--------------------
+- Managed Spark/Hadoop clusters.
+- Fast cluster creation (under 90 seconds).
+- Integration with Cloud Storage, BigQuery, Cloud Logging, and Monitoring.
+- Autoscaling and customizable cluster configurations.
+- Supports Hive, Pig, Spark MLlib, and other OSS tools.
+
+Pros:
+-----
+1. Easy migration of existing Hadoop/Spark workloads.
+2. Cost-effective with per-second billing.
+3. Flexible cluster management and scaling.
+4. Tight integration with Google Cloud ecosystem.
+5. Supports both batch and interactive workloads.
+
+Cons:
+-----
+1. Requires knowledge of Hadoop/Spark ecosystem.
+2. More operational overhead compared to serverless services.
+3. Not ideal for real-time streaming (batch-oriented focus).
+4. Cluster tuning may be required for performance.
+
+Why Use Dataproc?
+-----------------
+- Best for organizations already invested in Hadoop/Spark.
+- Ideal for batch ETL, data lake processing, and ML pipelines.
+- Provides control and flexibility with open-source frameworks.
+- Useful when you need custom cluster configurations and OSS compatibility.

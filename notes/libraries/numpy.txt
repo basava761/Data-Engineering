@@ -1,0 +1,78 @@
+NUMPY LIBRARY - COMPLETE NOTES
+
+1. Introduction
+   - NumPy (Numerical Python) is a core library for scientific computing.
+   - Provides support for large, multi-dimensional arrays and matrices.
+   - Includes mathematical functions to operate on arrays efficiently.
+
+2. Importing NumPy
+   - import numpy as np
+     (Common convention: use alias 'np' for brevity)
+   - Example:
+       import numpy as np
+       arr = np.array([1, 2, 3])
+
+3. Array Creation Methods
+   - np.array([list]): Create an array from a Python list.
+   - np.zeros((rows, cols)): Create an array filled with zeros.
+   - np.ones((rows, cols)): Create an array filled with ones.
+   - np.arange(start, stop, step): Create array with evenly spaced values.
+   - np.linspace(start, stop, num): Create array with specified number of evenly spaced values.
+   - np.eye(n): Identity matrix of size n x n.
+   - np.random.rand(rows, cols): Random values between 0 and 1.
+   - np.random.randint(low, high, size): Random integers in given range.
+
+4. Array Attributes
+   - arr.shape: Dimensions of array.
+   - arr.ndim: Number of dimensions.
+   - arr.size: Total number of elements.
+   - arr.dtype: Data type of elements.
+
+5. Array Manipulation
+   - np.reshape(arr, (rows, cols)): Reshape array.
+   - arr.flatten(): Flatten array into 1D.
+   - np.concatenate([arr1, arr2]): Concatenate arrays.
+   - np.vstack([arr1, arr2]): Stack arrays vertically.
+   - np.hstack([arr1, arr2]): Stack arrays horizontally.
+   - np.transpose(arr): Transpose array.
+
+6. Mathematical Operations
+   - np.add(arr1, arr2): Element-wise addition.
+   - np.subtract(arr1, arr2): Element-wise subtraction.
+   - np.multiply(arr1, arr2): Element-wise multiplication.
+   - np.divide(arr1, arr2): Element-wise division.
+   - np.power(arr, n): Raise elements to power n.
+   - np.sqrt(arr): Square root of elements.
+
+7. Statistical Functions
+   - np.mean(arr): Mean of array.
+   - np.median(arr): Median of array.
+   - np.std(arr): Standard deviation.
+   - np.var(arr): Variance.
+   - np.min(arr), np.max(arr): Minimum and maximum values.
+   - np.argmin(arr), np.argmax(arr): Indices of min and max.
+
+8. Linear Algebra Functions
+   - np.dot(arr1, arr2): Dot product.
+   - np.linalg.inv(arr): Inverse of matrix.
+   - np.linalg.det(arr): Determinant of matrix.
+   - np.linalg.eig(arr): Eigenvalues and eigenvectors.
+   - np.linalg.norm(arr): Norm of vector/matrix.
+
+9. Random Module
+   - np.random.seed(n): Set seed for reproducibility.
+   - np.random.choice(arr): Randomly select element(s) from array.
+   - np.random.randn(rows, cols): Random values from normal distribution.
+
+10. Syntax Examples
+   - import numpy as np
+   - arr = np.array([1, 2, 3])
+   - zeros = np.zeros((2, 3))
+   - reshaped = np.reshape(arr, (3, 1))
+   - mean_val = np.mean(arr)
+   - dot_product = np.dot(arr, arr)
+
+11. Summary
+   - NumPy provides efficient array handling, mathematical operations, statistics, and linear algebra.
+   - Essential for data science, machine learning, and scientific computing.
+   - Always import using 'import numpy as np' for standard practice.

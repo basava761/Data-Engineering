@@ -1,0 +1,81 @@
+PRIORITY IN AIRFLOW - COMPLETE NOTES
+
+1. Introduction
+   - Priority in Airflow determines the order in which tasks are scheduled when resources are limited.
+   - It is controlled using the "priority_weight" parameter in task definitions.
+   - Higher priority_weight tasks are scheduled before lower ones if they compete for the same pool or queue.
+
+2. Why Priority Is Important
+   - Ensures critical tasks run before less important ones.
+   - Helps manage limited resources effectively.
+   - Provides fine-grained control over scheduling when multiple tasks are waiting.
+
+3. How Priority Works
+   - Each task can be assigned a priority_weight (default is 1).
+   - The scheduler uses priority_weight to decide which task to run first when slots are limited.
+   - Priority interacts with pools and queues:
+     - Pools: Limit concurrency; priority decides which task gets a slot first.
+     - Queues: Route tasks to workers; priority decides scheduling order within the queue.
+
+4. Assigning Priority
+   - Example:
+       task1 = PythonOperator(
+           task_id="critical_task",
+           python_callable=run_critical,
+           priority_weight=10
+       )
+
+       task2 = PythonOperator(
+           task_id="non_critical_task",
+           python_callable=run_non_critical,
+           priority_weight=1
+       )
+   - In this example, task1 will be scheduled before task2 if both are waiting for resources.
+
+5. Best Practices
+   - Assign higher priority_weight to business-critical tasks.
+   - Keep default priority for normal tasks unless specific ordering is required.
+   - Use priority in combination with pools and queues for optimal workload management.
+   - Avoid excessive use of high priority for all tasks; it defeats the purpose.
+
+6. Priority vs Queues vs Pools
+   - Queues: Decide which worker runs a task (routing).
+   - Pools: Limit how many tasks can run concurrently (concurrency control).
+   - Priority: Decide which task runs first when resources are limited (scheduling order).
+
+7. Summary
+   - Priority is a scheduling mechanism in Airflow.
+   - It ensures important tasks are executed before less important ones when resources are constrained.
+   - Use priority_weight thoughtfully to balance workloads and meet business needs.
+
+
+
+
+PRIORITY WEIGHT EXECUTION FLOW IN AIRFLOW
+
+1. Concept
+   - priority_weight is used by the Airflow scheduler to decide which task should run first when multiple tasks are waiting for limited resources (e.g., pool slots, worker capacity).
+   - Higher priority_weight = higher chance of being scheduled earlier.
+
+2. Example Weights
+   - Task A: priority_weight = 10
+   - Task B: priority_weight = 1
+   - Task C: priority_weight = 100
+   - Task D: priority_weight = 2
+
+3. Execution Flow
+   - When all tasks are ready to run and resources are limited, the scheduler compares their priority_weight.
+   - Task C (priority_weight=100) will be scheduled first because it has the highest weight.
+   - Next, Task A (priority_weight=10) will be scheduled.
+   - Then, Task D (priority_weight=2) will be scheduled.
+   - Finally, Task B (priority_weight=1) will be scheduled last.
+
+4. Important Notes
+   - Priority only matters when tasks are competing for the same limited resource (pool slots, worker capacity).
+   - If resources are abundant, all tasks may run in parallel regardless of priority_weight.
+   - Dependencies (task1 >> task2) override priority; a dependent task cannot run until its upstream task finishes, even if it has higher priority_weight.
+
+5. Summary
+   - priority_weight determines scheduling order when resources are constrained.
+   - Higher values run first, lower values wait.
+   - In the given example, the order is: Task C → Task A → Task D → Task B.

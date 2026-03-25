@@ -1,0 +1,77 @@
+DAG EXECUTION IN CLOUD COMPOSER
+===============================
+
+1. DAG DEFINITION
+   - A DAG (Directed Acyclic Graph) is defined in Python.
+   - It specifies tasks, their dependencies, and scheduling.
+   - Example: task_A → task_B → task_C
+
+2. UPLOAD TO COMPOSER ENVIRONMENT
+   - The DAG file is placed in the Composer environment’s "dags/" folder.
+   - Composer automatically syncs DAGs to the Airflow scheduler.
+
+3. SCHEDULER ROLE
+   - The Airflow scheduler parses the DAG file.
+   - It determines when tasks should run based on the schedule interval.
+   - It places runnable tasks into the task queue.
+
+4. EXECUTOR ROLE
+   - The executor (e.g., Celery, Kubernetes) picks tasks from the queue.
+   - Tasks are sent to worker nodes for execution.
+
+5. TASK EXECUTION
+   - Each task runs in isolation (often inside a Docker container).
+   - Tasks can be anything: Python functions, Bash scripts, BigQuery jobs, etc.
+   - Logs are captured and stored in Cloud Logging.
+
+6. METADATA DATABASE
+   - Airflow uses a metadata database (Cloud SQL in Composer).
+   - It tracks DAG runs, task states (success, failed, skipped), and history.
+
+7. WEB UI MONITORING
+   - The Airflow webserver provides a UI to visualize DAGs.
+   - You can see task status, logs, and retry options.
+
+8. ERROR HANDLING & RETRIES
+   - If a task fails, Airflow retries based on DAG configuration.
+   - Failed tasks can trigger alerts via email or Pub/Sub.
+
+9. COMPLETION
+   - Once all tasks in the DAG succeed, the DAG run is marked as "success".
+   - Results are stored or passed downstream to other systems.
+
+-----------------------------------
+PICTORIAL TEXT DIAGRAM
+-----------------------------------
+
+[ DAG File (Python) ]
+        |
+        v
+[ Composer DAGs Folder ]
+        |
+        v
+[ Airflow Scheduler ] ---> Parses DAG & schedules tasks
+        |
+        v
+[ Task Queue ] ---> Holds runnable tasks
+        |
+        v
+[ Executor ] ---> Sends tasks to workers
+        |
+        v
+[ Worker Nodes ] ---> Execute tasks (Python, Bash, BigQuery, etc.)
+        |
+        v
+[ Metadata DB ] ---> Tracks states & history
+        |
+        v
+[ Airflow Web UI ] ---> Visualize DAG runs, logs, retries
+
+-----------------------------------
+SUMMARY
+-----------------------------------
+- DAGs define the workflow (tasks + dependencies).
+- Composer manages Airflow infrastructure.
+- Scheduler decides WHEN tasks run.
+- Executor + workers decide WHERE tasks run.
+- Metadata DB + Web UI provide tracking and monitoring.

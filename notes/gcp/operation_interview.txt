@@ -1,0 +1,167 @@
+TOP 20 AIRFLOW OPERATORS INTERVIEW QUESTIONS
+===========================================
+
+--------------------------------------------------
+1. What is an Operator in Airflow?
+--------------------------------------------------
+An Operator defines a single task in a DAG.
+It specifies what action needs to be performed.
+
+--------------------------------------------------
+2. Difference between Operator and Task?
+--------------------------------------------------
+Operator = Template/definition
+Task = Instance of operator in DAG
+
+--------------------------------------------------
+3. What is PythonOperator?
+--------------------------------------------------
+Executes a Python function.
+
+Use when:
+- Custom logic
+- API calls
+- Data transformation
+
+--------------------------------------------------
+4. What is BashOperator?
+--------------------------------------------------
+Executes bash/shell commands.
+
+Use when:
+- Running CLI tools
+- File operations
+
+--------------------------------------------------
+5. What is BranchPythonOperator?
+--------------------------------------------------
+Used for conditional branching.
+
+Use when:
+- If-else logic in DAG
+
+--------------------------------------------------
+6. What is ShortCircuitOperator?
+--------------------------------------------------
+Stops downstream tasks if condition is false.
+
+Use when:
+- Validation checks
+- Avoid unnecessary runs
+
+--------------------------------------------------
+7. What are Sensors in Airflow?
+--------------------------------------------------
+Operators that wait for a condition.
+
+Example:
+File arrival, time, external task completion
+
+--------------------------------------------------
+8. Types of Sensors?
+--------------------------------------------------
+- TimeSensor
+- FileSensor
+- ExternalTaskSensor
+
+--------------------------------------------------
+9. Difference between Sensor and Operator?
+--------------------------------------------------
+Operator → Executes task
+Sensor → Waits for condition
+
+--------------------------------------------------
+10. What is DataprocSubmitJobOperator?
+--------------------------------------------------
+Submits Spark/Hadoop job to Dataproc.
+
+Use when:
+- Big data processing in GCP
+
+--------------------------------------------------
+11. What is DataprocCreateClusterOperator?
+--------------------------------------------------
+Creates Dataproc cluster.
+
+Use when:
+- Starting processing environment
+
+--------------------------------------------------
+12. What is DataprocDeleteClusterOperator?
+--------------------------------------------------
+Deletes cluster after job.
+
+Use when:
+- Save cost
+
+--------------------------------------------------
+13. What is BigQueryInsertJobOperator?
+--------------------------------------------------
+Executes SQL jobs in BigQuery.
+
+Use when:
+- Data warehouse queries
+
+--------------------------------------------------
+14. What is EmailOperator?
+--------------------------------------------------
+Sends emails.
+
+Use when:
+- Alerts for success/failure
+
+--------------------------------------------------
+15. What is TriggerDagRunOperator?
+--------------------------------------------------
+Triggers another DAG.
+
+Use when:
+- Pipeline chaining
+
+--------------------------------------------------
+16. What is GCSToBigQueryOperator?
+--------------------------------------------------
+Loads data from GCS to BigQuery.
+
+Use when:
+- Data ingestion
+
+--------------------------------------------------
+17. What is difference between PythonOperator and BashOperator?
+--------------------------------------------------
+PythonOperator → Python logic
+BashOperator → Shell commands
+
+--------------------------------------------------
+18. How do you choose the right operator?
+--------------------------------------------------
+Depends on:
+- Type of task
+- Tool (Python, SQL, GCP)
+- Workflow requirement
+
+--------------------------------------------------
+19. Can one DAG use multiple operators?
+--------------------------------------------------
+Yes.
+A DAG typically uses multiple operators to form a pipeline.
+
+--------------------------------------------------
+20. Real-world pipeline using operators?
+--------------------------------------------------
+Example:
+1. FileSensor
+2. DataprocCreateClusterOperator
+3. DataprocSubmitJobOperator
+4. BigQueryInsertJobOperator
+5. EmailOperator
+6. DataprocDeleteClusterOperator
+
+--------------------------------------------------
+FINAL TIP
+--------------------------------------------------
+Operators = Building blocks of Airflow pipelines
+
+Understanding WHEN to use each operator is key for interviews.
+
+END OF NOTES

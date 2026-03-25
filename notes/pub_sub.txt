@@ -1,0 +1,59 @@
+GOOGLE CLOUD PUB/SUB - BEGINNER NOTES
+
+1. Introduction
+   - Pub/Sub stands for Publish/Subscribe.
+   - It is a messaging service that allows applications to send and receive data in real time.
+   - Used for building event-driven systems and streaming data pipelines.
+
+2. Core Concepts
+   - Topic: A named resource where publishers send messages.
+   - Publisher: Application that sends messages to a topic.
+   - Subscriber: Application that receives messages from a topic.
+   - Subscription: A connection between a topic and a subscriber.
+
+3. Message Flow
+   - Publisher sends a message to a topic.
+   - Pub/Sub stores the message reliably.
+   - Subscriber receives the message through a subscription.
+   - Subscriber acknowledges the message, then Pub/Sub removes it from the queue.
+
+4. Delivery Models
+   - Pull Subscription: Subscriber requests messages from Pub/Sub.
+   - Push Subscription: Pub/Sub delivers messages to a subscriber’s endpoint automatically.
+
+5. Key Features
+   - At-least-once delivery: Messages are delivered at least once.
+   - Scalable: Handles millions of messages per second.
+   - Durable: Messages are stored until acknowledged.
+   - Decoupling: Publishers and subscribers don’t need to know each other.
+
+6. Beginner Example (Python)
+   - Import library:
+       from google.cloud import pubsub_v1
+   - Create publisher:
+       publisher = pubsub_v1.PublisherClient()
+       topic_path = publisher.topic_path("my-project", "my-topic")
+       publisher.publish(topic_path, b"Hello Pub/Sub!")
+   - Create subscriber:
+       subscriber = pubsub_v1.SubscriberClient()
+       subscription_path = subscriber.subscription_path("my-project", "my-subscription")
+       def callback(message):
+           print(f"Received {message.data}")
+           message.ack()
+       subscriber.subscribe(subscription_path, callback=callback)
+
+7. Use Cases
+   - Streaming analytics (IoT sensor data, logs).
+   - Event-driven systems (trigger workflows when events occur).
+   - Data pipelines (ingest data into BigQuery or Dataflow).
+
+8. Characteristics in Simple English
+   - Topic: Like a mailbox where messages are dropped.
+   - Publisher: Like the sender who posts a letter.
+   - Subscriber: Like the person who opens the mailbox to read messages.
+   - Pub/Sub: Like a postal service that ensures delivery.
+
+9. Summary
+   - Pub/Sub is a real-time messaging service.
+   - Publishers send data to topics, subscribers receive it via subscriptions.
+   - Supports scalable, reliable, and event-driven communication between applications.

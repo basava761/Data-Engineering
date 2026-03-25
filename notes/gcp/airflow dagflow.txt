@@ -1,0 +1,230 @@
+AIRFLOW DAG FLOW: GIT → COMPOSER → GCS → EXECUTION
+=================================================
+
+--------------------------------------------------
+1. HIGH-LEVEL OVERVIEW
+--------------------------------------------------
+
+DAGs are:
+- Developed locally
+- Stored in Git (source of truth)
+- Deployed via CI/CD
+- Stored in GCS (Composer bucket)
+- Synced to Airflow components
+- Executed by Scheduler & Workers
+
+--------------------------------------------------
+2. COMPLETE FLOW DIAGRAM (VERY IMPORTANT)
+--------------------------------------------------
+
+        +----------------------+
+        |   DEVELOPER (LOCAL)  |
+        |  Write DAG (.py)     |
+        +----------+-----------+
+                   |
+                   v
+        +----------------------+
+        |     GIT REPO         |
+        | (GitHub/Bitbucket)   |
+        +----------+-----------+
+                   |
+                   v
+        +----------------------+
+        |   CI/CD (JENKINS)    |
+        |  Build + Validate    |
+        +----------+-----------+
+                   |
+                   v
+        +--------------------------------------+
+        |   GCS BUCKET (Composer Storage)      |
+        |--------------------------------------|
+        | /dags/     → DAG files (.py)         |
+        | /plugins/  → custom operators        |
+        | /data/     → supporting files        |
+        +----------------+---------------------+
+                         |
+                         v
+        +--------------------------------------+
+        |   CLOUD COMPOSER (AIRFLOW)           |
+        |--------------------------------------|
+        | Scheduler → Reads DAG                |
+        | Executor  → Sends tasks             |
+        | Workers   → Execute tasks           |
+        | Web UI    → Monitoring              |
+        +----------------+---------------------+
+                         |
+                         v
+        +----------------------+
+        |   TASK EXECUTION     |
+        | (Dataproc / BQ etc.) |
+        +----------------------+
+
+--------------------------------------------------
+3. STEP-BY-STEP FLOW (DETAILED)
+--------------------------------------------------
+
+STEP 1: DEVELOP DAG LOCALLY
+- Write DAG in Python
+- Store in project structure:
+
+  project/
+    dags/
+      pipeline.py
+    configs/
+    scripts/
+
+--------------------------------------------------
+
+STEP 2: PUSH TO GIT
+- Git is source of truth
+
+  git add .
+  git commit -m "new DAG"
+  git push
+
+--------------------------------------------------
+
+STEP 3: CI/CD PIPELINE TRIGGERS
+- Jenkins / Cloud Build runs
+
+Typical steps:
+- Pull code
+- Validate DAG (lint/test)
+- Deploy DAG
+
+--------------------------------------------------
+
+STEP 4: UPLOAD TO GCS BUCKET
+
+Command used:
+
+  gsutil cp dags/*.py gs://composer-bucket/dags/
+
+Now DAG is stored in:
+
+  gs://composer-bucket/dags/
+
+--------------------------------------------------
+
+STEP 5: COMPOSER AUTO-SYNC
+
+- Composer automatically syncs GCS → Airflow
+- DAG becomes available to Scheduler
+
+(No manual action required)
+
+--------------------------------------------------
+
+STEP 6: SCHEDULER PROCESSES DAG
+
+- Reads DAG file
+- Creates DAG runs
+- Schedules tasks
+
+--------------------------------------------------
+
+STEP 7: EXECUTOR HANDLES TASK
+
+- Picks scheduled task
+- Sends to worker nodes
+
+--------------------------------------------------
+
+STEP 8: WORKERS EXECUTE TASK
+
+- Runs actual logic:
+  - Dataproc job
+  - BigQuery query
+  - API call
+
+--------------------------------------------------
+
+STEP 9: METADATA DB UPDATE
+
+- Stores:
+  - Task status
+  - Logs
+  - DAG run info
+
+--------------------------------------------------
+
+STEP 10: WEB UI DISPLAYS STATUS
+
+- User can monitor:
+  - Success / failure
+  - Logs
+  - Execution history
+
+--------------------------------------------------
+4. KEY COMPONENT RESPONSIBILITY
+--------------------------------------------------
+
+Git:
+- Version control
+- Source of truth
+
+CI/CD (Jenkins):
+- Automates deployment
+
+GCS Bucket:
+- Storage for DAGs
+
+Composer:
+- Orchestration system
+
+Scheduler:
+- Decides WHEN to run
+
+Executor:
+- Decides HOW to run
+
+Workers:
+- Execute actual tasks
+
+--------------------------------------------------
+5. IMPORTANT BUCKET STRUCTURE
+--------------------------------------------------
+
+gs://composer-bucket/
+
+  /dags/
+    → DAG files
+
+  /plugins/
+    → custom operators/hooks
+
+  /data/
+    → config / temp files
+
+--------------------------------------------------
+6. IMPORTANT POINTS (INTERVIEW)
+--------------------------------------------------
+
+- DAGs are NOT stored inside Composer servers
+- They are stored in GCS bucket
+- Composer auto-syncs DAGs
+- Git is always source of truth
+- CI/CD handles deployment
+
+--------------------------------------------------
+7. COMMON MISTAKES
+--------------------------------------------------
+
+- Editing DAG directly in GCS
+- No version control
+- Manual uploads
+- Hardcoding configs
+
+--------------------------------------------------
+8. FINAL SUMMARY
+--------------------------------------------------
+
+Flow:
+
+Local → Git → CI/CD → GCS (/dags/) → Composer Sync → Scheduler → Executor → Workers
+
+Airflow = Orchestrator
+GCS = DAG storage
+Git = Source of truth
+
+END OF NOTES

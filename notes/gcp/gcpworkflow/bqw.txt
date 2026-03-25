@@ -1,0 +1,62 @@
+DAG INTERACTION WITH BUCKETS & BIGQUERY
+=======================================
+
+1. DAG DEFINITION
+   - A Python DAG is created in Airflow (Cloud Composer).
+   - It defines tasks such as:
+       * Uploading data to a GCS bucket
+       * Extracting/transforming data
+       * Loading data into BigQuery
+
+2. TASK FLOW
+   - Task 1: Read data from source (e.g., CSV file, API).
+   - Task 2: Upload raw data into a Google Cloud Storage bucket.
+   - Task 3: Trigger a transformation job (could be Dataflow, Python operator, or SQL).
+   - Task 4: Load transformed data into BigQuery tables.
+   - Task 5: Run queries or analytics in BigQuery.
+
+3. BUCKET INTERACTION
+   - Buckets act as staging areas.
+   - DAG tasks use operators like `GCSToBigQueryOperator` or `PythonOperator` with GCS client.
+   - Files are stored, versioned, and passed downstream.
+
+4. BIGQUERY INTERACTION
+   - BigQuery receives data from GCS or directly from DAG transformations.
+   - DAG tasks use `BigQueryInsertJobOperator` or `BigQueryExecuteQueryOperator`.
+   - Results are stored in datasets and tables for analytics.
+
+5. MONITORING & LOGGING
+   - Each task logs execution details in Cloud Logging.
+   - DAG run status is visible in the Airflow Web UI.
+
+-----------------------------------
+PICTORIAL TEXT DIAGRAM
+-----------------------------------
+
+[ DAG File (Python) ]
+        |
+        v
+[ Airflow Scheduler ]
+        |
+        v
+[ Task Queue ] -------------------------------
+        |                                    |
+        v                                    v
+[ Upload to GCS Bucket ]              [ Transform Data ]
+        |                                    |
+        v                                    v
+[ GCS Bucket (Raw Data) ] ----------------> [ Load into BigQuery ]
+                                                   |
+                                                   v
+                                          [ BigQuery Dataset/Table ]
+                                                   |
+                                                   v
+                                          [ Analytics / Queries / Reports ]
+
+-----------------------------------
+SUMMARY
+-----------------------------------
+- DAG defines the workflow and dependencies.
+- GCS Buckets are used as staging/storage for raw or intermediate data.
+- BigQuery is the final destination for structured analytics.
+- Airflow operators connect these services seamlessly.

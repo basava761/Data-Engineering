@@ -1,0 +1,48 @@
+WORKERS IN AIRFLOW - COMPLETE NOTES
+
+1. Introduction
+   - Workers are processes that actually execute tasks in Airflow.
+   - They pick up tasks from queues and run them according to the executor configuration.
+   - Workers are essential in distributed setups (CeleryExecutor, KubernetesExecutor).
+
+2. Role of Workers
+   - Execute the logic defined in tasks (PythonOperator, BashOperator, etc.).
+   - Communicate with the scheduler to receive tasks.
+   - Report task status (success, failed, running) back to the Airflow metadata database.
+   - Handle retries, logging, and resource usage during task execution.
+
+3. How Workers Operate
+   - Workers subscribe to one or more queues.
+   - When the scheduler places a task in a queue, a worker listening to that queue picks it up.
+   - Multiple workers can run in parallel, enabling distributed task execution.
+   - Workers can be scaled up or down depending on workload.
+
+4. Executors and Workers
+   - SequentialExecutor: No separate workers; tasks run sequentially.
+   - LocalExecutor: Workers are local processes on the same machine.
+   - CeleryExecutor: Workers are distributed across machines, managed by Celery.
+   - KubernetesExecutor: Each worker is a Kubernetes pod that runs a single task.
+
+5. Worker Configuration
+   - Workers are configured to listen to specific queues.
+   - Example: One worker listens to "default" queue, another listens to "spark_jobs" queue.
+   - Workers can be tuned for concurrency (number of tasks they can run simultaneously).
+   - Resource limits (CPU, memory) can be set depending on executor type.
+
+6. Best Practices
+   - Assign workers to queues based on workload type (e.g., heavy jobs vs lightweight jobs).
+   - Scale workers horizontally in distributed environments for large workloads.
+   - Monitor worker health and logs to detect failures or bottlenecks.
+   - Avoid overloading a single worker; distribute tasks evenly across workers.
+   - Use KubernetesExecutor for strong isolation and cloud-native scaling.
+
+7. Workers vs Scheduler
+   - Scheduler: Decides which tasks should run and when.
+   - Workers: Actually execute the tasks assigned by the scheduler.
+   - Scheduler = brain, Workers = hands.
+
+8. Summary
+   - Workers are the execution engines in Airflow.
+   - They pick up tasks from queues and run them according to executor configuration.
+   - Different executors define how workers are managed (local, distributed, or containerized).
+   - Proper worker configuration and scaling are key to efficient Airflow operation.

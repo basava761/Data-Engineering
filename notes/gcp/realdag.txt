@@ -1,0 +1,176 @@
+REAL-TIME AIRFLOW DAG (DATAPROC + BIGQUERY PIPELINE)
+===================================================
+
+USE CASE:
+Daily ETL pipeline:
+1. Wait for file in GCS
+2. Create Dataproc cluster
+3. Run Spark job
+4. Load data to BigQuery
+5. Send email notification
+6. Delete cluster
+
+--------------------------------------------------
+1. DAG CODE (PRODUCTION STYLE)
+--------------------------------------------------
+
+from airflow import DAG
+from airflow.utils.dates import days_ago
+from airflow.operators.email import EmailOperator
+from airflow.sensors.filesystem import FileSensor
+
+from airflow.providers.google.cloud.operators.dataproc import (
+    DataprocCreateClusterOperator,
+    DataprocSubmitJobOperator,
+    DataprocDeleteClusterOperator
+)
+
+from airflow.providers.google.cloud.operators.bigquery import BigQueryInsertJobOperator
+
+from datetime import timedelta
+
+PROJECT_ID = "your-project-id"
+REGION = "us-central1"
+CLUSTER_NAME = "example-cluster"
+
+default_args = {
+    "owner": "airflow",
+    "retries": 1,
+    "retry_delay": timedelta(minutes=5)
+}
+
+with DAG(
+    dag_id="dataproc_bigquery_pipeline",
+    default_args=default_args,
+    schedule_interval="@daily",
+    start_date=days_ago(1),
+    catchup=False
+) as dag:
+
+    # 1. WAIT FOR FILE
+    wait_for_file = FileSensor(
+        task_id="wait_for_file",
+        filepath="/path/to/local_or_mounted_file.csv",
+        poke_interval=60,
+        timeout=600
+    )
+
+    # 2. CREATE DATAPROC CLUSTER
+    create_cluster = DataprocCreateClusterOperator(
+        task_id="create_cluster",
+        project_id=PROJECT_ID,
+        cluster_name=CLUSTER_NAME,
+        region=REGION
+    )
+
+    # 3. SUBMIT SPARK JOB
+    spark_job = {
+        "reference": {"project_id": PROJECT_ID},
+        "placement": {"cluster_name": CLUSTER_NAME},
+        "spark_job": {
+            "main_class": "org.apache.spark.examples.SparkPi",
+            "jar_file_uris": ["file:///usr/lib/spark/examples/jars/spark-examples.jar"]
+        }
+    }
+
+    submit_job = DataprocSubmitJobOperator(
+        task_id="submit_spark_job",
+        job=spark_job,
+        region=REGION,
+        project_id=PROJECT_ID
+    )
+
+    # 4. LOAD INTO BIGQUERY
+    bq_task = BigQueryInsertJobOperator(
+        task_id="run_bq_query",
+        configuration={
+            "query": {
+                "query": "SELECT COUNT(*) FROM `your_dataset.your_table`",
+                "useLegacySql": False
+            }
+        }
+    )
+
+    # 5. EMAIL NOTIFICATION
+    email = EmailOperator(
+        task_id="send_email",
+        to="your@email.com",
+        subject="Pipeline Success",
+        html_content="Dataproc job completed successfully"
+    )
+
+    # 6. DELETE CLUSTER
+    delete_cluster = DataprocDeleteClusterOperator(
+        task_id="delete_cluster",
+        project_id=PROJECT_ID,
+        cluster_name=CLUSTER_NAME,
+        region=REGION
+    )
+
+--------------------------------------------------
+2. TASK DEPENDENCY (FLOW)
+--------------------------------------------------
+
+wait_for_file
+    >>
+create_cluster
+    >>
+submit_spark_job
+    >>
+bq_task
+    >>
+email
+    >>
+delete_cluster
+
+
+--------------------------------------------------
+3. WHAT EACH STEP DOES
+--------------------------------------------------
+
+FileSensor:
+- Waits for file before starting pipeline
+
+CreateCluster:
+- Starts Dataproc cluster
+
+SubmitJob:
+- Runs Spark job (data processing)
+
+BigQuery:
+- Runs SQL or loads data
+
+Email:
+- Sends success notification
+
+DeleteCluster:
+- Stops cluster to save cost
+
+
+--------------------------------------------------
+4. REAL INTERVIEW EXPLANATION
+--------------------------------------------------
+
+"In this DAG, we orchestrate a full ETL pipeline.
+We first wait for data availability, then dynamically create a Dataproc cluster,
+run a Spark job for processing, load results into BigQuery,
+send a notification, and finally delete the cluster to optimize cost."
+
+--------------------------------------------------
+5. IMPORTANT BEST PRACTICES
+--------------------------------------------------
+
+- Always delete cluster (cost saving)
+- Use retries for failure handling
+- Use sensors carefully (avoid long blocking)
+- Keep DAG modular
+
+--------------------------------------------------
+6. FINAL UNDERSTANDING
+--------------------------------------------------
+
+Airflow = Orchestrates flow
+Dataproc = Processes data
+BigQuery = Stores and queries data
+
+END OF DAG

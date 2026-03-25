@@ -1,0 +1,59 @@
+PYTHON OS LIBRARY - COMPLETE NOTES
+
+1. File and Directory Management
+   - os.chdir(path): Change the current working directory.
+   - os.getcwd(): Return the current working directory.
+   - os.listdir(path='.'): List files and directories in the given path.
+   - os.mkdir(path): Create a new directory at the specified path.
+   - os.makedirs(path): Create intermediate directories as needed.
+   - os.rmdir(path): Remove a directory (must be empty).
+   - os.remove(path): Delete a file.
+   - os.rename(src, dst): Rename a file or directory.
+   - os.stat(path): Get status information about a file (size, permissions, etc).
+   - os.path.exists(path): Check if a path exists.
+
+2. Environment Variables
+   - os.environ: Dictionary representing the environment variables.
+   - os.getenv(key, default=None): Get the value of an environment variable.
+   - os.putenv(key, value): Set an environment variable (not recommended, use environ instead).
+
+3. Process Management
+   - os.system(command): Execute a command in the system shell.
+   - os.startfile(path): Open a file with its associated application (Windows only).
+   - os._exit(status): Exit the process immediately with the given status.
+   - os.abort(): Terminate the process immediately.
+   - os.kill(pid, sig): Send a signal to a process by ID.
+
+4. File Descriptor Operations
+   - os.open(path, flags): Open a file and return a file descriptor.
+   - os.close(fd): Close a file descriptor.
+   - os.read(fd, n): Read n bytes from a file descriptor.
+   - os.write(fd, str): Write a string to a file descriptor.
+   - os.lseek(fd, pos, how): Set the position of the file descriptor.
+
+5. Permissions and Ownership
+   - os.chmod(path, mode): Change file permissions.
+   - os.chown(path, uid, gid): Change file owner and group.
+   - os.umask(mask): Set the file mode creation mask.
+
+6. Path Utilities (via os.path)
+   - os.path.join(path1, path2): Join paths intelligently.
+   - os.path.split(path): Split path into (head, tail).
+   - os.path.basename(path): Get the file name from a path.
+   - os.path.dirname(path): Get the directory name from a path.
+   - os.path.abspath(path): Get the absolute path.
+   - os.path.isabs(path): Check if a path is absolute.
+   - os.path.isfile(path): Check if path is a file.
+   - os.path.isdir(path): Check if path is a directory.
+
+7. Miscellaneous
+   - os.getpid(): Get the current process ID.
+   - os.getppid(): Get the parent process ID.
+   - os.cpu_count(): Return the number of CPUs in the system.
+   - os.name: Return the name of the operating system dependent module imported (e.g., 'posix', 'nt').
+   - os.sep: Path separator (e.g., '/' on Unix, '\' on Windows).
+   - os.linesep: Line separator used by the system.
+
+SUMMARY:
+- The os library provides methods for file/directory handling, environment variables, process management, file descriptors, permissions, and path utilities.
+- It is essential for writing portable code that interacts with the operating system.

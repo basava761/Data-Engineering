@@ -1,0 +1,100 @@
+AIRFLOW QUEUES - COMPLETE NOTES
+
+1. Introduction
+   - Queues in Airflow are used to control how tasks are distributed to workers.
+   - They allow prioritization, isolation, and scaling of workloads.
+   - Especially important when using distributed executors like CeleryExecutor or KubernetesExecutor.
+
+2. Why Queues Are Important
+   - Task Distribution: Decide which worker executes which task.
+   - Resource Isolation: Separate heavy tasks (e.g., Spark jobs) from lightweight ones.
+   - Prioritization: Assign critical tasks to dedicated queues.
+   - Scalability: Helps scale workloads across multiple workers in distributed environments.
+
+3. How Queues Work
+   - Each task can be assigned a queue using the "queue" parameter.
+   - Example:
+       task = PythonOperator(
+           task_id="heavy_task",
+           python_callable=my_func,
+           queue="high_priority"
+       )
+   - Workers listen to specific queues. A worker only executes tasks from the queues it is subscribed to.
+   - Default Queue: If no queue is specified, tasks go to the "default" queue.
+
+4. Executors and Queues
+   - CeleryExecutor: Uses Celery workers that subscribe to queues.
+   - KubernetesExecutor: Uses Kubernetes pods; queues can map to pod configurations.
+   - LocalExecutor: Queues are less relevant since tasks run locally.
+
+5. Best Practices
+   - Define queues by workload type (e.g., default, high_priority, spark_jobs).
+   - Match workers to queues: Configure workers to listen only to the queues they should handle.
+   - Avoid overloading the default queue: Assign heavy tasks to custom queues.
+   - Monitor queue performance using Airflow UI and logs.
+   - Combine with pools: Pools limit concurrency, queues control distribution.
+
+6. Example Setup
+   task1 = BashOperator(
+       task_id="light_task",
+       bash_command="echo 'Quick job'",
+       queue="default"
+   )
+
+   task2 = PythonOperator(
+       task_id="heavy_task",
+       python_callable=run_spark_job,
+       queue="spark_jobs"
+   )
+
+   - task1 runs on workers listening to the "default" queue.
+   - task2 runs on workers listening to the "spark_jobs" queue.
+
+7. Queues vs Pools
+   - Queues: Decide which worker runs a task (routing mechanism).
+   - Pools: Limit how many tasks run concurrently (concurrency control).
+   - Queues = distribution, Pools = concurrency.
+
+8. Summary
+   - Queues are a routing mechanism that determine which worker executes a task.
+   - Pools are concurrency controls that limit how many tasks run at once.
+   - Use queues to separate workloads and scale workers efficiently.
+   - Always configure workers to listen to the right queues for balanced execution.
+
+
+QUEUES VS POOLS VS PRIORITY IN AIRFLOW
+
+1. Queues
+   - Purpose: Control which worker executes a task.
+   - Tasks can be assigned to a specific queue using the "queue" parameter.
+   - Workers listen to queues; only tasks from subscribed queues are executed.
+   - Default queue: If no queue is specified, tasks go to the "default" queue.
+   - Best use: Separate workloads (e.g., heavy jobs vs lightweight jobs) and route tasks to appropriate workers.
+
+2. Pools
+   - Purpose: Limit concurrency of tasks that share a common resource.
+   - Pools define a fixed number of slots; tasks using that pool cannot exceed the slot limit.
+   - Example: A pool with 5 slots allows only 5 tasks to run concurrently from that pool.
+   - Best use: Prevent resource overuse (e.g., database connections, API rate limits).
+
+3. Priority
+   - Purpose: Control the order in which tasks are scheduled when resources are limited.
+   - Each task can be assigned a "priority_weight".
+   - Higher priority_weight tasks are scheduled before lower ones if competing for the same pool or queue.
+   - Best use: Ensure critical tasks run before less important ones when resources are constrained.
+
+4. Key Differences
+   - Queues: Decide *which worker* runs a task (routing mechanism).
+   - Pools: Limit *how many tasks* can run concurrently (concurrency control).
+   - Priority: Decide *which task runs first* when resources are limited (scheduling order).
+
+5. Example Usage
+   - Assign heavy tasks to "spark_jobs" queue and lightweight tasks to "default" queue.
+   - Use a "db_pool" with 10 slots to limit concurrent database queries.
+   - Set priority_weight=10 for critical tasks and priority_weight=1 for non-critical tasks.
+
+6. Summary
+   - Queues = distribution of tasks across workers.
+   - Pools = concurrency limits for shared resources.
+   - Priority = scheduling order when tasks compete for limited resources.
+   - Together, they provide fine-grained control over task execution in Airflow.

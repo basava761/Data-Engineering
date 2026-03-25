@@ -1,0 +1,68 @@
+BigQuery Security Notes
+=======================
+
+Overview
+--------
+BigQuery provides fine-grained access control to protect sensitive data.
+Two key features are Row-level Security (RLS) and Column-level Security (CLS).
+These allow organizations to restrict access to specific rows or columns
+within a table, ensuring compliance and data privacy.
+
+Row-level Security (RLS)
+------------------------
+Definition:
+- Restricts access to specific rows in a table based on conditions.
+- Useful when different users should only see subsets of data.
+
+How It Works:
+- Implemented using authorized views or row access policies.
+- Policies define filter conditions based on user identity or attributes.
+
+Example:
+CREATE ROW ACCESS POLICY region_policy
+ON my_dataset.sales
+GRANT TO ("user1@example.com", "group:analysts@example.com")
+FILTER USING (region = "APAC");
+
+Explanation:
+- Only users in the policy can see rows where region = "APAC".
+
+Use Cases:
+- Multi-tenant applications (each tenant sees only their data).
+- Regional restrictions (users see data only from their region).
+- Compliance with privacy regulations.
+
+Column-level Security (CLS)
+---------------------------
+Definition:
+- Restricts access to specific columns in a table.
+- Useful when sensitive attributes (e.g., salary, SSN) must be hidden.
+
+How It Works:
+- Implemented using authorized views or column-level access policies.
+- Users can query the table but only see permitted columns.
+
+Example:
+GRANT SELECT ON COLUMN salary
+OF TABLE my_dataset.employees
+TO ROLE hr_team;
+
+Explanation:
+- Only HR team members can access the "salary" column.
+
+Use Cases:
+- Protect sensitive attributes (PII, financial data).
+- Allow analysts to query non-sensitive columns without exposing restricted data.
+- Enforce least-privilege access.
+
+Best Practices
+--------------
+1. Use IAM roles to manage access consistently.
+2. Combine RLS and CLS for maximum security.
+3. Create authorized views to expose only necessary data.
+4. Document policies for compliance and auditing.
+5. Test policies to ensure correct enforcement.
+
+Summary
+-------
+Row-level security ensures users see

@@ -1,0 +1,171 @@
+ataprocCreateClusterOperatorDATAPROC CREATE CLUSTER OPERATOR - COMPLETE NOTES
+================================================
+
+--------------------------------------------------
+1. HOW DataprocCreateClusterOperator WORKS
+--------------------------------------------------
+
+DataprocCreateClusterOperator does NOT create cluster directly.
+
+It works like this:
+Airflow Operator → GCP Dataproc API → Cluster Created
+
+Airflow only triggers the API call.
+Actual cluster creation is handled by GCP Dataproc service.
+
+--------------------------------------------------
+2. WHERE IS CLUSTER CONFIG DEFINED?
+--------------------------------------------------
+
+Cluster configuration is defined using:
+
+cluster_config = { ... }
+
+This config contains all details required to create a cluster.
+
+Then passed into operator:
+
+DataprocCreateClusterOperator(
+    cluster_config=cluster_config
+)
+
+--------------------------------------------------
+3. FULL CLUSTER CONFIG (REAL-WORLD EXAMPLE)
+--------------------------------------------------
+
+cluster_config = {
+    "master_config": {
+        "num_instances": 1,
+        "machine_type_uri": "n1-standard-4",
+        "disk_config": {
+            "boot_disk_type": "pd-standard",
+            "boot_disk_size_gb": 50,
+        },
+    },
+    "worker_config": {
+        "num_instances": 2,
+        "machine_type_uri": "n1-standard-4",
+        "disk_config": {
+            "boot_disk_type": "pd-standard",
+            "boot_disk_size_gb": 50,
+        },
+    },
+    "software_config": {
+        "image_version": "2.1-debian11",
+        "optional_components": ["JUPYTER"],
+    },
+    "gce_cluster_config": {
+        "zone_uri": "us-central1-a",
+        "subnetwork_uri": "default",
+    },
+    "lifecycle_config": {
+        "idle_delete_ttl": "3600s"
+    }
+}
+
+--------------------------------------------------
+4. USING CONFIG IN OPERATOR
+--------------------------------------------------
+
+create_cluster = DataprocCreateClusterOperator(
+    task_id="create_cluster",
+    project_id=PROJECT_ID,
+    cluster_name="my-cluster",
+    cluster_config=cluster_config,
+    region="us-central1"
+)
+
+--------------------------------------------------
+5. EXPLANATION OF CONFIG FIELDS
+--------------------------------------------------
+
+master_config:
+- Defines master node (cluster controller)
+
+worker_config:
+- Defines worker nodes (processing power)
+
+machine_type_uri:
+- Defines CPU + RAM
+
+disk_config:
+- Defines storage size and type
+
+software_config:
+- Defines Spark version and image
+
+gce_cluster_config:
+- Defines network, zone, subnetwork
+
+lifecycle_config:
+- Auto delete cluster after idle time (cost saving)
+
+--------------------------------------------------
+6. INTERNAL EXECUTION FLOW
+--------------------------------------------------
+
+1. DAG is triggered
+2. Scheduler schedules task
+3. Executor sends task to worker
+4. Worker runs operator
+5. Operator calls Dataproc API:
+
+   projects.regions.clusters.create()
+
+6. Dataproc service creates cluster
+7. Status returned to Airflow
+
+--------------------------------------------------
+7. INTERVIEW ANSWER (IMPORTANT)
+--------------------------------------------------
+
+DataprocCreateClusterOperator is an Airflow operator that triggers 
+GCP Dataproc API to create a cluster.
+
+We pass cluster configuration including master and worker nodes,
+machine types, and lifecycle settings.
+
+Airflow does not create the cluster directly, it orchestrates the API call.
+
+--------------------------------------------------
+8. COMMON MISTAKES
+--------------------------------------------------
+
+- Not defining cluster_config
+- Not deleting cluster (high cost)
+- Using fixed cluster without lifecycle rules
+- Ignoring autoscaling
+
+--------------------------------------------------
+9. BEST PRACTICES
+--------------------------------------------------
+
+- Always define cluster_config properly
+- Use lifecycle_config to auto-delete cluster
+- Keep cluster dynamic (create → use → delete)
+- Use autoscaling for efficiency
+
+--------------------------------------------------
+10. FINAL UNDERSTANDING
+--------------------------------------------------
+
+Operator = API trigger
+Cluster Config = Cluster definition
+Dataproc = Actual cluster creation
+
+Airflow = Orchestrator, not processor
+
+END OF NOTES
+
+
+=======================
+import json
+from google.cloud import storage
+
+def load_config():
+    client = storage.Client()
+    bucket = client.get_bucket("your-bucket")
+    blob = bucket.blob("configs/cluster_config.json")
+    return json.loads(blob.download_as_text())
+
+cluster_config = load_config()

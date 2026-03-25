@@ -1,0 +1,51 @@
+POOLS IN AIRFLOW - COMPLETE NOTES
+
+1. Introduction
+   - Pools in Airflow are used to limit the number of concurrent tasks that can run for a specific resource.
+   - They help prevent resource exhaustion (e.g., database connections, API rate limits).
+   - Pools provide fine-grained control over task concurrency beyond global parallelism settings.
+
+2. Why Pools Are Important
+   - Prevent overloading external systems (databases, APIs).
+   - Ensure fair usage of shared resources.
+   - Control concurrency at a resource level, not just globally.
+   - Provide flexibility to manage different workloads with different limits.
+
+3. How Pools Work
+   - Pools are defined in the Airflow UI or CLI.
+   - Each pool has a fixed number of slots.
+   - Tasks assigned to a pool consume one slot while running.
+   - If all slots are occupied, tasks wait until a slot becomes free.
+   - Example: A pool with 5 slots allows only 5 tasks to run concurrently from that pool.
+
+4. Assigning Pools to Tasks
+   - Use the "pool" parameter in the operator definition.
+   - Example:
+       task = PythonOperator(
+           task_id="db_query",
+           python_callable=run_query,
+           pool="db_pool"
+       )
+   - Here, the task will run only if a slot is available in "db_pool".
+
+5. Managing Pools
+   - Pools can be created and managed via:
+     - Airflow UI (Admin → Pools).
+     - Airflow CLI (airflow pools command).
+   - You can adjust the number of slots dynamically based on resource availability.
+
+6. Best Practices
+   - Create pools for critical external systems (e.g., database connections, APIs).
+   - Size pools according to resource limits (e.g., max DB connections).
+   - Avoid assigning all tasks to the default pool; use custom pools for better control.
+   - Monitor pool usage in the Airflow UI to identify bottlenecks.
+
+7. Pools vs Queues vs Priority
+   - Pools: Limit concurrency (how many tasks can run at once).
+   - Queues: Route tasks to specific workers (which worker runs the task).
+   - Priority: Decide scheduling order when tasks compete for limited resources.
+
+8. Summary
+   - Pools are concurrency controls for shared resources.
+   - They prevent resource exhaustion by limiting simultaneous task execution.
+   - Use pools alongside queues and priority weights for optimal workload management.

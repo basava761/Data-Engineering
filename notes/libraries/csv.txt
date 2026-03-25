@@ -1,0 +1,64 @@
+PYTHON CSV LIBRARY - COMPLETE NOTES
+
+1. Introduction
+   - The csv module in Python provides functionality to read from and write to CSV (Comma-Separated Values) files.
+   - It is part of the standard library, so no installation is required.
+   - Must be imported using: import csv
+
+2. Reading CSV Files
+   - csv.reader(file): Read rows from a CSV file as lists.
+   - Example:
+       with open("data.csv", newline="") as f:
+           reader = csv.reader(f)
+           for row in reader:
+               print(row)
+   - Each row is returned as a list of strings.
+
+   - csv.DictReader(file): Read rows into dictionaries.
+   - Example:
+       with open("data.csv") as f:
+           reader = csv.DictReader(f)
+           for row in reader:
+               print(row["column_name"])
+   - Each row is returned as a dictionary with keys from the header row.
+
+3. Writing CSV Files
+   - csv.writer(file): Write rows to a CSV file.
+   - Example:
+       with open("output.csv", "w", newline="") as f:
+           writer = csv.writer(f)
+           writer.writerow(["Name", "Age"])
+           writer.writerows([["Alice", 25], ["Bob", 30]])
+
+   - csv.DictWriter(file, fieldnames): Write rows as dictionaries.
+   - Example:
+       with open("output.csv", "w", newline="") as f:
+           fieldnames = ["Name", "Age"]
+           writer = csv.DictWriter(f, fieldnames=fieldnames)
+           writer.writeheader()
+           writer.writerow({"Name": "Alice", "Age": 25})
+
+4. Important Parameters
+   - delimiter: Character used to separate values (default is comma).
+   - quotechar: Character used to quote fields (default is ").
+   - escapechar: Character used to escape delimiter inside fields.
+   - lineterminator: String used to terminate lines (default is '\r\n').
+
+5. Common Methods
+   - writer.writerow(row): Write a single row.
+   - writer.writerows(rows): Write multiple rows.
+   - reader.__next__(): Get the next row from the reader.
+   - DictReader.fieldnames: List of column names from the header.
+   - DictWriter.writeheader(): Write the header row.
+
+6. Best Practices
+   - Always open files with newline="" to avoid extra blank lines on Windows.
+   - Use DictReader/DictWriter for better readability when working with headers.
+   - Handle exceptions for missing or malformed data.
+   - Close files properly using "with open(...)" context manager.
+
+7. Summary
+   - The csv module simplifies reading and writing CSV files.
+   - Use reader/DictReader for reading, writer/DictWriter for writing.
+   - Customize delimiter, quotechar, and other parameters for non-standard CSV formats.
+   - Essential for data exchange, reporting, and integration tasks.

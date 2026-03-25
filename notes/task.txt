@@ -1,0 +1,55 @@
+TASKS IN AIRFLOW - COMPLETE NOTES
+
+1. Introduction
+   - A Task in Airflow is the smallest unit of work in a DAG.
+   - It represents a single operation, defined by an operator (e.g., PythonOperator, BashOperator).
+   - Tasks are static definitions of what should be executed, not the actual execution itself.
+
+2. Characteristics of Tasks
+   - Defined inside a DAG using operators.
+   - Each task must have a unique task_id.
+   - Tasks can be connected with dependencies to form workflows.
+   - Tasks are reusable definitions; they become task instances when executed.
+
+3. Task Lifecycle
+   - Created when a DAG is parsed.
+   - Scheduled by the Airflow scheduler.
+   - Executed by workers according to the executor configuration.
+   - Task state is tracked (queued, running, success, failed, skipped, etc.).
+
+4. Defining Tasks
+   - Example using PythonOperator:
+       def my_func():
+           print("Hello from Airflow")
+
+       task = PythonOperator(
+           task_id="my_task",
+           python_callable=my_func
+       )
+   - Example using BashOperator:
+       task = BashOperator(
+           task_id="print_date",
+           bash_command="date"
+       )
+
+5. Dependencies Between Tasks
+   - Tasks can be linked using >> or << operators.
+   - Example:
+       task1 >> task2
+   - This means task2 runs only after task1 completes successfully.
+
+6. Task vs Task Instance
+   - Task: The definition of work (blueprint).
+   - Task Instance: The actual execution of a task for a specific DAG run and execution_date.
+
+7. Best Practices
+   - Keep tasks small and focused (one clear job per task).
+   - Use meaningful task_id names for clarity.
+   - Avoid heavy logic inside tasks; delegate complex processing to external scripts or services.
+   - Monitor task logs to debug issues.
+   - Use retries and alerts for critical tasks.
+
+8. Summary
+   - Tasks are the building blocks of DAGs in Airflow.
+   - They define what should be executed, while task instances represent actual runs.
+   - Proper task design and dependency management are key to reliable workflows.

@@ -1,0 +1,315 @@
+Data Engineer Interview Q&A (100 Questions)
+===========================================
+
+BEGINNER LEVEL (Q1–Q25)
+-----------------------
+Q1: What is the role of a Data Engineer?
+A1: Designing, building, and maintaining data pipelines and infrastructure for analytics.
+
+Q2: Difference between OLTP and OLAP?
+A2: OLTP handles transactional workloads; OLAP supports analytical queries.
+
+Q3: What is ETL vs ELT?
+A3: ETL = Extract, Transform, Load; ELT = Extract, Load, Transform (transform inside warehouse).
+
+Q4: What is a data warehouse?
+A4: Central repository optimized for analytics and reporting.
+
+Q5: What is BigQuery?
+A5: Google Cloud’s serverless data warehouse for large-scale analytics.
+
+Q6: What is Cloud Storage used for?
+A6: Object storage for raw files, logs, and backups.
+
+Q7: What is Pub/Sub?
+A7: Messaging service for event-driven and streaming data ingestion.
+
+Q8: What is Dataflow?
+A8: Serverless batch and streaming data processing service based on Apache Beam.
+
+Q9: What is Dataproc?
+A9: Managed Hadoop/Spark service for big data workloads.
+
+Q10: What is Cloud Composer?
+A10: Managed Apache Airflow service for workflow orchestration.
+
+Q11: What is normalization?
+A11: Organizing data to reduce redundancy and improve integrity.
+
+Q12: What is denormalization?
+A12: Combining tables for faster queries at the cost of redundancy.
+
+Q13: What is a star schema?
+A13: Fact table linked to dimension tables for analytics.
+
+Q14: What is a snowflake schema?
+A14: Normalized dimension tables linked to fact tables.
+
+Q15: What is partitioning in BigQuery?
+A15: Dividing tables by date or field to reduce query costs.
+
+Q16: What is clustering in BigQuery?
+A16: Organizing data by columns to improve query performance.
+
+Q17: What is Row-level Security (RLS)?
+A17: Restricting access to specific rows based on conditions.
+
+Q18: What is Column-level Security (CLS)?
+A18: Restricting access to specific columns in a table.
+
+Q19: What is IAM in GCP?
+A19: Identity and Access Management for roles and permissions.
+
+Q20: What is a service account?
+A20: Special account for applications/services to access GCP resources.
+
+Q21: What is BigQuery ML?
+A21: Allows training ML models directly using SQL.
+
+Q22: What is Cloud Audit Logs?
+A22: Logs of administrative and data access activities for compliance.
+
+Q23: What is schema-on-read vs schema-on-write?
+A23: Schema-on-read applies structure at query time; schema-on-write enforces schema at load.
+
+Q24: What is a data lake?
+A24: Central repository for raw structured and unstructured data.
+
+Q25: What is a data pipeline?
+A25: Automated process to move and transform data between systems.
+
+---
+
+INTERMEDIATE LEVEL (Q26–Q60)
+----------------------------
+Q26: How do you optimize BigQuery queries?
+A26: Use partitioning, clustering, avoid SELECT *, materialized views.
+
+Q27: How do you handle late-arriving streaming data?
+A27: Use Dataflow windowing and watermark strategies.
+
+Q28: How do you orchestrate multi-step pipelines?
+A28: Use Cloud Composer DAGs.
+
+Q29: How do you migrate Hadoop workloads to GCP?
+A29: Use Dataproc for Spark/Hadoop compatibility.
+
+Q30: How do you enforce least privilege in IAM?
+A30: Assign predefined roles, avoid primitive roles, use service accounts.
+
+Q31: How do you secure sensitive data in BigQuery?
+A31: Use RLS, CLS, authorized views, and IAM roles.
+
+Q32: How do you monitor pipeline health?
+A32: Use Cloud Monitoring, Logging, and Composer DAG monitoring.
+
+Q33: How do you reduce Cloud Storage costs?
+A33: Use lifecycle policies, Nearline/Coldline classes.
+
+Q34: How do you integrate external data into BigQuery?
+A34: Use federated queries or external tables.
+
+Q35: How do you enforce encryption in GCP?
+A35: Use CMEK with Cloud KMS.
+
+Q36: How do you design Slowly Changing Dimensions (SCD)?
+A36: Type 1 (overwrite), Type 2 (new row), Type 3 (new column).
+
+Q37: How do you handle schema drift in pipelines?
+A37: Use flexible schemas (JSON), schema-aware transforms.
+
+Q38: How do you implement audit logging?
+A38: Enable Cloud Audit Logs and monitor IAM activity.
+
+Q39: How do you integrate ML into pipelines?
+A39: Use BigQuery ML or Vertex AI with Dataflow preprocessing.
+
+Q40: How do you design a star schema in BigQuery?
+A40: Central fact table with dimension tables for customers, products, time.
+
+Q41: How do you enforce compliance with GDPR?
+A41: Use IAM, encryption, audit logs, and Data Catalog.
+
+Q42: How do you replicate datasets across regions?
+A42: Export to Cloud Storage or use BigQuery dataset replication.
+
+Q43: How do you handle pipeline retries in Composer?
+A43: Configure DAG retries and error handling policies.
+
+Q44: How do you integrate GCP with BI tools?
+A44: Use BigQuery connectors for Looker, Tableau, Power BI.
+
+Q45: How do you design a pipeline for IoT data?
+A45: Pub/Sub ingestion → Dataflow → BigQuery → ML.
+
+Q46: How do you enforce column masking for PII?
+A46: Use CLS and authorized views.
+
+Q47: How do you optimize Dataproc clusters?
+A47: Use autoscaling, preemptible VMs, ephemeral clusters.
+
+Q48: How do you enforce IAM policies across projects?
+A48: Use organization-level policies and folders.
+
+Q49: How do you integrate external APIs with pipelines?
+A49: Use Cloud Functions or Dataflow API connectors.
+
+Q50: How do you design a hybrid architecture?
+A50: Use VPN/Interconnect, Transfer Service, federated queries.
+
+Q51: How do you monitor BigQuery costs?
+A51: Use billing reports, budgets, and query cost estimates.
+
+Q52: How do you enforce row-level restrictions for tenants?
+A52: Use RLS policies tied to tenant IDs.
+
+Q53: How do you handle streaming windowing?
+A53: Use fixed, sliding, or session windows in Dataflow.
+
+Q54: How do you integrate Salesforce data?
+A54: Use Dataflow connectors or ETL tools.
+
+Q55: How do you enforce IAM for service accounts?
+A55: Assign minimal roles, rotate keys, monitor usage.
+
+Q56: How do you design a snowflake schema?
+A56: Normalize dimension tables linked to fact tables.
+
+Q57: How do you enforce compliance with HIPAA?
+A57: Use IAM, encryption, audit logs, HIPAA-compliant services.
+
+Q58: How do you integrate ML with streaming data?
+A58: Dataflow preprocessing + Vertex AI or BigQuery ML.
+
+Q59: How do you design pipelines for fraud detection?
+A59: Pub/Sub ingestion → Dataflow → BigQuery ML scoring → alerts.
+
+Q60: How do you enforce encryption for all datasets?
+A60: Use CMEK with Cloud KMS and org policies.
+
+---
+
+ADVANCED LEVEL (Q61–Q100)
+-------------------------
+Q61: How do you design a multi-tenant BigQuery architecture?
+A61: Use RLS policies, IAM dataset restrictions, and authorized views.
+
+Q62: How do you enforce compliance with PCI DSS?
+A62: Use IAM, encryption, audit logs, tokenization, PCI-compliant services.
+
+Q63: How do you design pipelines for genomic data?
+A63: Cloud Storage for raw data, Dataflow preprocessing, BigQuery analytics.
+
+Q64: How do you enforce IAM across hundreds of projects?
+A64: Use org policies, folders, and IAM inheritance.
+
+Q65: How do you integrate GCP pipelines with AWS?
+A65: Use Composer (Airflow) with cross-cloud operators.
+
+Q66: How do you design pipelines for customer churn prediction?
+A66: BigQuery ML for training, Dataflow preprocessing, Composer orchestration.
+
+Q67: How do you enforce regional compliance laws?
+A67: Use RLS filtering by region attributes tied to user identity.
+
+Q68: How do you integrate external messaging systems?
+A68: Use Pub/Sub connectors or Dataflow custom I/O.
+
+Q69: How do you design multi-region architecture for HA?
+A69: Replicate datasets, global Pub/Sub topics, failover pipelines.
+
+Q70: How do you enforce least privilege for analysts?
+A70: Assign `bigquery.dataViewer` and use authorized views.
+
+Q71: How do you handle schema evolution in shared datasets?
+A71: Use versioned schemas and communicate changes.
+
+Q72: How do you integrate ML into pipelines with Vertex AI?
+A72: Use Dataflow preprocessing + Vertex AI training.
+
+Q73: How do you monitor IAM policy changes?
+A73: Use Cloud Audit Logs and Security Command Center.
+
+Q74: How do you design pipelines for real-time dashboards?
+A74: Pub/Sub → Dataflow → BigQuery → Looker Studio.
+
+Q75: How do you enforce encryption for Cloud Storage buckets?
+A75: Use CMEK with Cloud KMS and enforce bucket policies.
+
+Q76: How do you optimize BigQuery for cost?
+A76: Partitioning, clustering, materialized views, query filters.
+
+Data Engineer Interview Q&A (Q77–Q100)
+======================================
+
+Q77: How do you design pipelines for social media analytics?
+A77: Use Pub/Sub for ingestion, Dataflow for preprocessing, BigQuery for storage, and Looker Studio for dashboards.
+
+Q78: How do you enforce IAM policies for external contractors?
+A78: Assign temporary IAM roles with least privilege, monitor access via audit logs, and revoke after project completion.
+
+Q79: How do you handle schema evolution in streaming pipelines?
+A79: Use schema-aware transforms in Dataflow, design flexible schemas (JSON), and version schemas.
+
+Q80: How do you integrate GCP pipelines with external cloud providers?
+A80: Use Composer (Airflow) with cross-cloud operators, or APIs for data transfer.
+
+Q81: How do you design pipelines for e-commerce clickstream data?
+A81: Pub/Sub ingestion → Dataflow streaming → BigQuery storage → ML models for recommendation.
+
+Q82: How do you enforce encryption for Pub/Sub messages?
+A82: Use CMEK with Cloud KMS and enforce encryption policies.
+
+Q83: How do you optimize BigQuery for real-time dashboards?
+A83: Use partitioned tables, materialized views, and BI Engine acceleration.
+
+Q84: How do you design pipelines for financial risk analysis?
+A84: Batch ingestion via Dataflow, BigQuery for analytics, Vertex AI for ML models.
+
+Q85: How do you enforce IAM policies for multi-tenant systems?
+A85: Use RLS policies, CLS, and dataset-level IAM restrictions.
+
+Q86: How do you integrate GCP pipelines with external relational databases?
+A86: Use Database Migration Service or Dataflow JDBC connectors.
+
+Q87: How do you design pipelines for log analytics?
+A87: Pub/Sub ingestion → Dataflow → BigQuery → Looker Studio dashboards.
+
+Q88: How do you enforce compliance with SOC 2 in GCP?
+A88: Use IAM, encryption, audit logs, monitoring, and SOC 2-compliant services.
+
+Q89: How do you optimize Dataproc for ML workloads?
+A89: Use autoscaling clusters, GPU-enabled nodes, and ephemeral clusters.
+
+Q90: How do you design pipelines for customer segmentation?
+A90: Dataflow preprocessing → BigQuery storage → BigQuery ML clustering models.
+
+Q91: How do you enforce IAM policies for shared datasets?
+A91: Use dataset-level IAM roles, authorized views, and RLS/CLS.
+
+Q92: How do you integrate GCP pipelines with external messaging systems like Kafka?
+A92: Use Dataflow Kafka connectors or third-party integration tools.
+
+Q93: How do you design pipelines for healthcare analytics?
+A93: Cloud Storage for raw data, Dataflow preprocessing, BigQuery storage, Vertex AI for ML.
+
+Q94: How do you enforce encryption for BigQuery backups?
+A94: Export to Cloud Storage with CMEK encryption enabled.
+
+Q95: How do you optimize BigQuery for machine learning workloads?
+A95: Use partitioned tables, materialized views, and BigQuery ML for training.
+
+Q96: How do you design pipelines for fraud detection in banking?
+A96: Pub/Sub ingestion → Dataflow streaming → BigQuery ML scoring → alerts.
+
+Q97: How do you enforce IAM policies for service accounts in pipelines?
+A97: Assign minimal predefined roles, rotate keys, and monitor usage with audit logs.
+
+Q98: How do you integrate GCP pipelines with external REST APIs?
+A98: Use Cloud Functions or Dataflow with API connectors.
+
+Q99: How do you design pipelines for real-time recommendation systems?
+A99: Pub/Sub ingestion → Dataflow streaming → BigQuery storage → Vertex AI ML models.
+
+Q100: How do you enforce multi-region high availability in GCP pipelines?
+A100: Replicate datasets across regions, use global Pub/Sub topics, and design failover pipelines with Composer.

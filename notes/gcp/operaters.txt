@@ -1,0 +1,382 @@
+AIRFLOW OPERATORS - COMPLETE STUDY NOTES
+=======================================
+
+--------------------------------------------------
+1. WHAT IS AN OPERATOR?
+--------------------------------------------------
+
+An Operator in Airflow defines a SINGLE task in a DAG.
+
+It tells:
+- What to do
+- Where to do
+- How to do
+
+Example:
+Run a Spark job, execute SQL, send email, etc.
+
+--------------------------------------------------
+2. TYPES OF OPERATORS (HIGH LEVEL)
+--------------------------------------------------
+
+1. Core Operators
+2. Bash & Python Operators
+3. Database Operators
+4. Transfer Operators
+5. Sensor Operators
+6. GCP Operators (Important for you)
+7. Utility Operators
+
+--------------------------------------------------
+3. CORE OPERATORS
+--------------------------------------------------
+
+3.1 DummyOperator (EmptyOperator in new versions)
+
+What:
+- Does nothing
+
+Why:
+- Used to structure DAG
+
+When:
+- For start/end points
+- For branching clarity
+
+----------------------------------
+
+3.2 PythonOperator
+
+What:
+- Runs Python function
+
+Why:
+- Custom logic execution
+
+When:
+- Data transformation
+- API calls
+- Custom scripts
+
+----------------------------------
+
+3.3 BranchPythonOperator
+
+What:
+- Chooses path based on condition
+
+Why:
+- Dynamic workflows
+
+When:
+- If-else logic in pipeline
+
+----------------------------------
+
+3.4 ShortCircuitOperator
+
+What:
+- Stops pipeline if condition is false
+
+Why:
+- Avoid unnecessary execution
+
+When:
+- Validation checks
+
+
+--------------------------------------------------
+4. BASH & SCRIPT OPERATORS
+--------------------------------------------------
+
+4.1 BashOperator
+
+What:
+- Runs bash command
+
+Why:
+- Execute shell scripts
+
+When:
+- Running CLI tools
+- File operations
+
+----------------------------------
+
+4.2 PythonVirtualenvOperator
+
+What:
+- Runs Python in isolated env
+
+Why:
+- Avoid dependency conflicts
+
+When:
+- Different library versions needed
+
+
+--------------------------------------------------
+5. DATABASE OPERATORS
+--------------------------------------------------
+
+5.1 PostgresOperator / MySqlOperator
+
+What:
+- Executes SQL queries
+
+Why:
+- DB interaction
+
+When:
+- Insert/update/select data
+
+----------------------------------
+
+5.2 BigQueryOperator (Deprecated → use BigQueryInsertJobOperator)
+
+What:
+- Runs BigQuery jobs
+
+Why:
+- Query execution in BigQuery
+
+When:
+- Data warehouse processing
+
+
+--------------------------------------------------
+6. TRANSFER OPERATORS
+--------------------------------------------------
+
+6.1 S3ToGCSOperator
+
+What:
+- Moves data from AWS S3 to GCS
+
+Why:
+- Cross-cloud transfer
+
+When:
+- Migrating data
+
+----------------------------------
+
+6.2 GCSToBigQueryOperator
+
+What:
+- Loads data into BigQuery
+
+Why:
+- Data ingestion
+
+When:
+- Batch loading
+
+----------------------------------
+
+6.3 BigQueryToGCSOperator
+
+What:
+- Exports BigQuery data
+
+Why:
+- Data sharing
+
+When:
+- Backup / export
+
+
+--------------------------------------------------
+7. SENSOR OPERATORS (VERY IMPORTANT)
+--------------------------------------------------
+
+Sensors WAIT for a condition.
+
+7.1 TimeSensor
+
+What:
+- Waits until specific time
+
+Why:
+- Time-based scheduling
+
+When:
+- Delay execution
+
+----------------------------------
+
+7.2 FileSensor
+
+What:
+- Waits for file
+
+Why:
+- Dependency on file arrival
+
+When:
+- Data pipelines
+
+----------------------------------
+
+7.3 ExternalTaskSensor
+
+What:
+- Waits for another DAG
+
+Why:
+- Cross-DAG dependency
+
+When:
+- Complex pipelines
+
+
+--------------------------------------------------
+8. GCP OPERATORS (IMPORTANT FOR YOU)
+--------------------------------------------------
+
+8.1 DataprocCreateClusterOperator
+
+What:
+- Creates Dataproc cluster
+
+Why:
+- Start processing environment
+
+When:
+- Before Spark jobs
+
+----------------------------------
+
+8.2 DataprocSubmitJobOperator
+
+What:
+- Submits Spark/Hadoop job
+
+Why:
+- Execute data processing
+
+When:
+- Main processing step
+
+----------------------------------
+
+8.3 DataprocDeleteClusterOperator
+
+What:
+- Deletes cluster
+
+Why:
+- Save cost
+
+When:
+- After job completion
+
+----------------------------------
+
+8.4 BigQueryInsertJobOperator
+
+What:
+- Runs BigQuery job
+
+Why:
+- SQL processing
+
+When:
+- Query execution
+
+----------------------------------
+
+8.5 GCSCreateBucketOperator
+
+What:
+- Creates bucket
+
+Why:
+- Storage setup
+
+When:
+- Infrastructure tasks
+
+
+--------------------------------------------------
+9. EMAIL & NOTIFICATION OPERATORS
+--------------------------------------------------
+
+9.1 EmailOperator
+
+What:
+- Sends email
+
+Why:
+- Alerts
+
+When:
+- Success/failure notification
+
+
+--------------------------------------------------
+10. UTILITY OPERATORS
+--------------------------------------------------
+
+10.1 TriggerDagRunOperator
+
+What:
+- Triggers another DAG
+
+Why:
+- Pipeline chaining
+
+When:
+- Modular workflows
+
+----------------------------------
+
+10.2 LatestOnlyOperator
+
+What:
+- Runs only latest DAG run
+
+Why:
+- Avoid backlog
+
+When:
+- Streaming-like pipelines
+
+
+--------------------------------------------------
+11. HOW TO CHOOSE OPERATOR (IMPORTANT)
+--------------------------------------------------
+
+Use PythonOperator → Custom logic  
+Use BashOperator → CLI commands  
+Use Sensors → Waiting conditions  
+Use GCP Operators → Cloud tasks  
+Use Transfer Operators → Data movement  
+
+--------------------------------------------------
+12. REAL PIPELINE EXAMPLE
+--------------------------------------------------
+
+1. FileSensor → wait for file
+2. DataprocCreateClusterOperator
+3. DataprocSubmitJobOperator
+4. BigQueryInsertJobOperator
+5. EmailOperator
+6. DataprocDeleteClusterOperator
+
+--------------------------------------------------
+13. FINAL SUMMARY
+--------------------------------------------------
+
+Operator = Task
+
+Types:
+- Execution (Python, Bash)
+- Data movement (Transfer)
+- Waiting (Sensors)
+- Cloud (GCP Operators)
+
+Airflow = Orchestrator
+Operators = Building blocks of pipeline
+
+END OF NOTES

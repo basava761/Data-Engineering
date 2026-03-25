@@ -1,0 +1,57 @@
+PYTHON MATH LIBRARY - COMPLETE NOTES
+
+1. Introduction
+   - The math module provides mathematical functions and constants.
+   - It is part of Python’s standard library and must be imported using: import math.
+
+2. Constants
+   - math.pi: The mathematical constant π (3.14159...).
+   - math.e: The mathematical constant e (2.71828...).
+   - math.inf: Represents infinity.
+   - math.nan: Represents "Not a Number".
+
+3. Basic Functions
+   - math.ceil(x): Return the smallest integer greater than or equal to x.
+   - math.floor(x): Return the largest integer less than or equal to x.
+   - math.trunc(x): Truncate x to its integer part.
+   - math.fabs(x): Return the absolute value of x.
+   - math.factorial(x): Return the factorial of x.
+
+4. Power and Logarithmic Functions
+   - math.pow(x, y): Return x raised to the power y.
+   - math.sqrt(x): Return the square root of x.
+   - math.exp(x): Return e raised to the power x.
+   - math.log(x): Return the natural logarithm of x.
+   - math.log10(x): Return the base-10 logarithm of x.
+   - math.log2(x): Return the base-2 logarithm of x.
+
+5. Trigonometric Functions
+   - math.sin(x): Return the sine of x (x in radians).
+   - math.cos(x): Return the cosine of x.
+   - math.tan(x): Return the tangent of x.
+   - math.asin(x): Return the arc sine of x.
+   - math.acos(x): Return the arc cosine of x.
+   - math.atan(x): Return the arc tangent of x.
+   - math.atan2(y, x): Return atan(y/x) considering signs of both arguments.
+
+6. Angular Conversion
+   - math.degrees(x): Convert angle x from radians to degrees.
+   - math.radians(x): Convert angle x from degrees to radians.
+
+7. Special Functions
+   - math.gcd(a, b): Return the greatest common divisor of a and b.
+   - math.lcm(a, b): Return the least common multiple of a and b (Python 3.9+).
+   - math.isfinite(x): Check if x is finite.
+   - math.isinf(x): Check if x is infinite.
+   - math.isnan(x): Check if x is NaN.
+   - math.comb(n, k): Return the number of combinations (Python 3.8+).
+   - math.perm(n, k): Return the number of permutations (Python 3.8+).
+
+8. Floating Point Functions
+   - math.modf(x): Return fractional and integer parts of x.
+   - math.copysign(x, y): Return x with the sign of y.
+   - math.hypot(x, y): Return the Euclidean norm sqrt(x^2 + y^2).
+
+9. Summary
+   - The math module provides constants, basic arithmetic, power/logarithmic functions, trigonometry, conversions, and special functions.
+   - It is essential for scientific computing, engineering, and data analysis tasks.

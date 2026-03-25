@@ -1,0 +1,37 @@
+Google Cloud Composer Notes
+===========================
+
+Overview:
+---------
+Cloud Composer is a fully managed workflow orchestration service built on Apache Airflow.
+It automates scheduling, monitoring, and managing complex data pipelines.
+
+Key Characteristics:
+--------------------
+- Based on Apache Airflow (open-source standard).
+- DAG (Directed Acyclic Graph) based workflow design.
+- Integration with BigQuery, Dataflow, Dataproc, GCS, Pub/Sub, and other GCP services.
+- Provides monitoring, logging, and retry mechanisms.
+- Scalable workflow execution.
+
+Pros:
+-----
+1. Standardized orchestration using Airflow.
+2. Fully managed, reduces operational burden.
+3. Easy integration with GCP services.
+4. Provides visibility and monitoring for pipelines.
+5. Supports complex, multi-step workflows.
+
+Cons:
+-----
+1. Airflow learning curve for beginners.
+2. Can be costly for small workloads.
+3. Less suitable for ultra-low latency pipelines.
+4. Requires DAG design knowledge.
+
+Why Use Composer?
+-----------------
+- Best for orchestrating complex, multi-step data pipelines.
+- Ideal when workflows span multiple GCP services.
+- Provides visibility, monitoring, and automation for pipelines.
+- Useful for scheduling ETL jobs, ML workflows, and cross-service orchestration.

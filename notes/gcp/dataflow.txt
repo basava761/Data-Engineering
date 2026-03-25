@@ -1,0 +1,38 @@
+Google Cloud Dataflow Notes
+===========================
+
+Overview:
+---------
+Dataflow is a serverless data processing service based on Apache Beam.
+It supports both batch and streaming pipelines with autoscaling and dynamic work rebalancing.
+
+Key Characteristics:
+--------------------
+- Unified model for batch and streaming processing.
+- Serverless: no cluster management required.
+- Autoscaling and dynamic work rebalancing.
+- Integration with Pub/Sub, BigQuery, Cloud Storage, and other GCP services.
+- Strong support for event-driven architectures.
+
+Pros:
+-----
+1. Handles both real-time streaming and batch processing.
+2. Serverless, minimal operational overhead.
+3. Scales automatically with workload.
+4. Strong integration with GCP ecosystem.
+5. Unified programming model (Apache Beam).
+
+Cons:
+-----
+1. Requires learning Apache Beam SDK.
+2. Debugging pipelines can be complex.
+3. Cost can rise with poorly optimized pipelines.
+4. Less control compared to cluster-based systems.
+
+Why Use Dataflow?
+-----------------
+- Best for real-time streaming analytics and ETL.
+- Ideal for event-driven architectures (IoT, logs, clickstreams).
+- Provides flexibility with unified batch + streaming model.
+- Reduces operational burden with serverless execution.
+- Useful when you need scalable, fault-tolerant pipelines without managing infrastructure.

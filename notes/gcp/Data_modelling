@@ -1,0 +1,103 @@
+Data Modeling Notes
+===================
+
+Introduction
+------------
+Data modeling is the process of designing and structuring data for storage,
+retrieval, and analysis. It defines how data is organized, related, and
+managed within databases or data warehouses.
+
+BEGINNER CONCEPTS
+-----------------
+1. What is Data Modeling?
+   - Representation of data structures and relationships.
+   - Blueprint for building databases.
+
+2. Types of Data Models:
+   - Conceptual: High-level view of entities and relationships.
+   - Logical: Detailed attributes, keys, and relationships.
+   - Physical: Actual implementation in a database system.
+
+3. Basic Terminology:
+   - Entity: Object or concept (e.g., Customer, Order).
+   - Attribute: Property of an entity (e.g., Name, Age).
+   - Relationship: Association between entities (e.g., Customer places Order).
+   - Primary Key: Unique identifier for a record.
+   - Foreign Key: Links records across tables.
+
+4. Normalization:
+   - Process of organizing data to reduce redundancy.
+   - Normal forms (1NF, 2NF, 3NF, BCNF).
+   - Example: Splitting customer and order details into separate tables.
+
+INTERMEDIATE CONCEPTS
+---------------------
+5. ER Diagrams (Entity-Relationship):
+   - Visual representation of entities, attributes, and relationships.
+   - Symbols: Rectangles (entities), ovals (attributes), diamonds (relationships).
+
+6. Denormalization:
+   - Combining tables for performance optimization.
+   - Trade-off: Faster queries vs. increased redundancy.
+
+7. Data Types and Constraints:
+   - Numeric, string, date/time, boolean.
+   - Constraints: NOT NULL, UNIQUE, CHECK, DEFAULT.
+
+8. Dimensional Modeling:
+   - Used in data warehouses for analytics.
+   - Star Schema: Fact table + dimension tables.
+   - Snowflake Schema: Normalized dimension tables.
+   - Example: Sales fact table with Customer, Product, Time dimensions.
+
+9. Keys and Indexes:
+   - Primary Key, Foreign Key, Composite Key.
+   - Indexes improve query performance.
+
+ADVANCED CONCEPTS
+-----------------
+10. Advanced Relationships:
+    - One-to-One, One-to-Many, Many-to-Many.
+    - Recursive relationships (entity relates to itself).
+
+11. Hierarchical and Network Models:
+    - Tree structures for hierarchical data.
+    - Graph models for complex relationships.
+
+12. Big Data Modeling:
+    - Schema design for distributed systems (NoSQL, Hadoop, BigQuery).
+    - Denormalized, wide tables for scalability.
+    - Handling semi-structured data (JSON, XML).
+
+13. Data Vault Modeling:
+    - Hybrid approach for enterprise data warehouses.
+    - Components: Hubs (business keys), Links (relationships), Satellites (context).
+
+14. Slowly Changing Dimensions (SCD):
+    - Handling changes in dimension data over time.
+    - Types: SCD Type 1 (overwrite), Type 2 (add new row), Type 3 (add new column).
+
+15. Advanced Optimization:
+    - Partitioning and clustering for large tables.
+    - Materialized views for faster queries.
+    - Indexing strategies for performance.
+
+16. Governance and Security:
+    - Data lineage and metadata management.
+    - Role-based access control.
+    - Compliance with regulations (GDPR, HIPAA).
+
+17. Modern Trends:
+    - Cloud-native data modeling (BigQuery, Snowflake).
+    - Data lakes vs. data warehouses.
+    - Schema-on-read vs. schema-on-write.
+    - Graph databases (Neo4j) for relationship-heavy data.
+
+Summary
+-------
+Data modeling evolves from simple entity-attribute relationships to complex
+architectures for big data and analytics. Beginners focus on normalization
+and ER diagrams, intermediates learn dimensional modeling and optimization,
+and advanced practitioners design scalable, secure, and cloud-native models.
+Mastery of data modeling ensures efficient storage, retrieval, and analysis
+across modern data platforms.

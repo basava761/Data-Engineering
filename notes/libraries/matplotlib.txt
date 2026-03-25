@@ -1,0 +1,72 @@
+MATPLOTLIB LIBRARY - COMPLETE NOTES
+
+1. Introduction
+   - Matplotlib is a Python library for creating static, interactive, and animated visualizations.
+   - It is widely used for data visualization in scientific computing, data analysis, and machine learning.
+   - The most commonly used module is matplotlib.pyplot.
+
+2. Importing Matplotlib
+   - import matplotlib.pyplot as plt
+     (Common convention: use alias 'plt')
+   - Example:
+       import matplotlib.pyplot as plt
+       plt.plot([1,2,3],[4,5,6])
+       plt.show()
+
+3. Basic Plotting
+   - plt.plot(x, y): Plot line graph.
+   - plt.scatter(x, y): Scatter plot.
+   - plt.bar(x, height): Bar chart.
+   - plt.hist(data, bins): Histogram.
+   - plt.pie(sizes, labels): Pie chart.
+   - plt.show(): Display the plot.
+
+4. Customizing Plots
+   - plt.title("Title"): Add title.
+   - plt.xlabel("X-axis label"): Label x-axis.
+   - plt.ylabel("Y-axis label"): Label y-axis.
+   - plt.legend(): Show legend.
+   - plt.grid(True): Show grid.
+   - plt.xlim(min, max): Set x-axis limits.
+   - plt.ylim(min, max): Set y-axis limits.
+
+5. Multiple Plots
+   - plt.subplot(rows, cols, index): Create subplots.
+   - plt.figure(figsize=(w,h)): Create a new figure with size.
+   - Example:
+       plt.subplot(1,2,1)
+       plt.plot([1,2,3],[4,5,6])
+       plt.subplot(1,2,2)
+       plt.bar([1,2,3],[4,5,6])
+
+6. Styling
+   - plt.plot(x, y, "r--"): Red dashed line.
+   - plt.plot(x, y, "bo"): Blue circle markers.
+   - Colors: "r" (red), "g" (green), "b" (blue), "k" (black).
+   - Line styles: "-" (solid), "--" (dashed), ":" (dotted).
+
+7. Saving Plots
+   - plt.savefig("plot.png"): Save plot as image.
+   - plt.savefig("plot.pdf"): Save plot as PDF.
+
+8. Advanced Features
+   - plt.errorbar(x, y, yerr): Plot with error bars.
+   - plt.fill_between(x, y1, y2): Fill area between curves.
+   - plt.contour(X, Y, Z): Contour plot.
+   - plt.imshow(image): Display image data.
+   - plt.colorbar(): Add color scale.
+
+9. Syntax Examples
+   - import matplotlib.pyplot as plt
+   - x = [1,2,3,4]
+   - y = [10,20,25,30]
+   - plt.plot(x, y, marker="o", color="blue")
+   - plt.title("Simple Line Plot")
+   - plt.xlabel("X-axis")
+   - plt.ylabel("Y-axis")
+   - plt.show()
+
+10. Summary
+   - Matplotlib provides versatile plotting functions for line, bar, scatter, histogram, pie, and advanced charts.
+   - Customization options include titles, labels, legends, grids, and styles.
+   - Essential for visualizing data in Python workflows.

@@ -1,0 +1,68 @@
+OPENPYXL LIBRARY - COMPLETE NOTES
+
+1. Introduction
+   - OpenPyXL is a Python library for reading, writing, and modifying Excel files (.xlsx).
+   - It allows automation of Excel tasks without needing Microsoft Excel installed.
+
+2. Workbook Methods
+   - openpyxl.Workbook(): Create a new workbook.
+   - openpyxl.load_workbook(filename): Load an existing workbook.
+   - workbook.save(filename): Save the workbook to a file.
+   - workbook.close(): Close the workbook.
+
+3. Worksheet Methods
+   - workbook.active: Get the active worksheet.
+   - workbook.create_sheet(title): Create a new worksheet.
+   - workbook.remove(sheet): Remove a worksheet.
+   - workbook[sheetname]: Access a worksheet by name.
+   - worksheet.title: Get or set the worksheet name.
+
+4. Cell Methods
+   - worksheet.cell(row, column): Access a cell by row and column.
+   - cell.value: Get or set the value of a cell.
+   - cell.row, cell.column: Get the row and column index of a cell.
+   - cell.coordinate: Get the cell reference (e.g., "A1").
+
+5. Row and Column Operations
+   - worksheet.append(list): Append a row of values.
+   - worksheet.iter_rows(): Iterate over rows.
+   - worksheet.iter_cols(): Iterate over columns.
+   - worksheet.max_row: Get the maximum row index with data.
+   - worksheet.max_column: Get the maximum column index with data.
+
+6. Styles and Formatting
+   - from openpyxl.styles import Font, PatternFill, Alignment
+   - cell.font = Font(bold=True, color="FF0000")
+   - cell.fill = PatternFill(fill_type="solid", fgColor="FFFF00")
+   - cell.alignment = Alignment(horizontal="center")
+
+7. Merging and Freezing
+   - worksheet.merge_cells("A1:D1"): Merge a range of cells.
+   - worksheet.unmerge_cells("A1:D1"): Unmerge cells.
+   - worksheet.freeze_panes = "A2": Freeze rows/columns.
+
+8. Formulas
+   - cell.value = "=SUM(A1:A10)": Assign a formula to a cell.
+   - Formulas are stored as text; Excel evaluates them when opened.
+
+9. Charts (basic usage)
+   - from openpyxl.chart import BarChart, Reference
+   - chart = BarChart()
+   - data = Reference(worksheet, min_col=2, min_row=1, max_row=10)
+   - chart.add_data(data)
+   - worksheet.add_chart(chart, "E5")
+
+10. Images
+   - from openpyxl.drawing.image import Image
+   - img = Image("picture.png")
+   - worksheet.add_image(img, "A1")
+
+11. Data Validation
+   - from openpyxl.worksheet.datavalidation import DataValidation
+   - dv = DataValidation(type="list", formula1='"Yes,No"', allow_blank=True)
+   - worksheet.add_data_validation(dv)
+   - dv.add(worksheet["A1"])
+
+12. Summary
+   - OpenPyXL provides methods for workbook/worksheet management, cell operations, formatting, charts, images, and data validation.
+   - It is widely used for Excel automation, reporting, and data manipulation in Python.

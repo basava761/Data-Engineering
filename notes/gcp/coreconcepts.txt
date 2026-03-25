@@ -1,0 +1,125 @@
+Data Engineering Core Concepts - Interview Explanation Guide
+===========================================================
+
+1. Data Warehousing
+-------------------
+Definition: A centralized repository for structured data optimized for analytics.
+How to explain: 
+- "A data warehouse stores integrated data from multiple sources for reporting and analysis. 
+- For example, in GCP we use BigQuery as a serverless warehouse to run large-scale SQL queries."
+
+2. ETL vs ELT
+-------------
+Definition: ETL = Extract, Transform, Load; ELT = Extract, Load, Transform.
+How to explain:
+- "ETL transforms data before loading into the warehouse. ELT loads raw data first, then transforms inside the warehouse. 
+- BigQuery supports ELT because it can handle transformations at scale."
+
+3. Data Lake
+------------
+Definition: A repository for raw structured and unstructured data.
+How to explain:
+- "A data lake stores raw data in its native format, often in Cloud Storage. 
+- It’s schema-on-read, meaning structure is applied when data is queried."
+
+4. OLTP vs OLAP
+---------------
+Definition: OLTP = transactional systems; OLAP = analytical systems.
+How to explain:
+- "OLTP handles day-to-day operations like banking transactions. OLAP supports analytical queries, like aggregating millions of records in BigQuery."
+
+5. Normalization & Denormalization
+----------------------------------
+Definition: Normalization reduces redundancy; denormalization improves query speed.
+How to explain:
+- "Normalized schemas are efficient for storage and integrity. Denormalized schemas, like star schemas, are better for analytics because they reduce joins."
+
+6. Star Schema & Snowflake Schema
+---------------------------------
+Definition: Star = fact table + dimension tables; Snowflake = normalized dimensions.
+How to explain:
+- "Star schema is simpler and faster for queries. Snowflake schema saves space but requires more joins."
+
+7. Partitioning & Clustering
+----------------------------
+Definition: Techniques to optimize BigQuery queries.
+How to explain:
+- "Partitioning divides tables by date or field to reduce scanned data. Clustering organizes data by columns to improve query performance."
+
+8. Row-level & Column-level Security
+------------------------------------
+Definition: Restricting access to specific rows or columns.
+How to explain:
+- "RLS ensures users only see data relevant to them, like their region. CLS hides sensitive columns like salary. Both enforce fine-grained access control."
+
+9. IAM Roles & Policies
+-----------------------
+Definition: Identity and Access Management controls permissions.
+How to explain:
+- "IAM assigns roles to users or service accounts. For example, `bigquery.dataViewer` allows read-only access to datasets."
+
+10. Data Governance
+-------------------
+Definition: Framework for managing data availability, usability, integrity, and security.
+How to explain:
+- "Governance ensures data is trustworthy and compliant. It includes policies, metadata management, and audit logging."
+
+11. Data Assurance
+------------------
+Definition: Ensuring accuracy, completeness, and reliability of data.
+How to explain:
+- "Assurance means validating data quality with checks, monitoring pipelines, and maintaining audit trails."
+
+12. Streaming vs Batch Processing
+---------------------------------
+Definition: Streaming = real-time; Batch = scheduled bulk processing.
+How to explain:
+- "Streaming uses Pub/Sub + Dataflow for real-time ingestion. Batch uses Dataflow or Dataproc for scheduled jobs."
+
+13. Dataflow & Pub/Sub
+----------------------
+Definition: Core GCP services for pipelines.
+How to explain:
+- "Pub/Sub ingests events. Dataflow processes them in real-time or batch. Together they form scalable pipelines."
+
+14. BigQuery ML
+---------------
+Definition: ML models trained directly in BigQuery using SQL.
+How to explain:
+- "BigQuery ML lets analysts build models without leaving SQL. For example, predicting customer churn with logistic regression."
+
+15. Data Catalog
+----------------
+Definition: Metadata management service in GCP.
+How to explain:
+- "Data Catalog helps discover datasets, track lineage, and enforce governance."
+
+16. Slowly Changing Dimensions (SCD)
+------------------------------------
+Definition: Techniques for handling changes in dimension data.
+How to explain:
+- "Type 1 overwrites old data, Type 2 adds new rows to preserve history, Type 3 adds new columns. Type 2 is common for tracking historical changes."
+
+17. Audit Logging
+-----------------
+Definition: Tracking who accessed or changed data.
+How to explain:
+- "Audit logs provide transparency and compliance. In GCP, Cloud Audit Logs record all access and admin actions."
+
+18. Data Modeling
+-----------------
+Definition: Designing structure and relationships of data.
+How to explain:
+- "Conceptual models define entities, logical models define attributes and keys, physical models implement in databases."
+
+19. Cost Optimization
+---------------------
+Definition: Techniques to reduce cloud costs.
+How to explain:
+- "Partitioning, clustering, avoiding SELECT *, materialized views, and lifecycle policies in Cloud Storage all help reduce costs."
+
+20. Multi-Region Architecture
+-----------------------------
+Definition: Designing for high availability and disaster recovery.
+How to explain:
+- "Replicate datasets across regions, use global Pub/Sub topics, and design failover pipelines with Composer."

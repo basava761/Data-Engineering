@@ -1,0 +1,143 @@
+PANDAS LIBRARY - COMPLETE NOTES
+
+1. Introduction
+   - Pandas is a Python library for data manipulation and analysis.
+   - Provides two main data structures:
+     * Series: 1D labeled array
+     * DataFrame: 2D labeled table (rows and columns)
+   - Built on top of NumPy, widely used in data science and machine learning.
+
+2. Importing Pandas
+   - import pandas as pd
+     (Common convention: use alias 'pd')
+   - Example:
+       import pandas as pd
+       df = pd.DataFrame({"Name": ["Alice", "Bob"], "Age": [25, 30]})
+
+3. Creating Data Structures
+   - pd.Series([list]): Create a Series.
+   - pd.DataFrame(dict): Create a DataFrame from dictionary.
+   - pd.read_csv("file.csv"): Load data from CSV file.
+   - pd.read_excel("file.xlsx"): Load data from Excel file.
+   - pd.read_sql(query, connection): Load data from SQL query.
+
+4. Inspecting Data
+   - df.head(n): Show first n rows.
+   - df.tail(n): Show last n rows.
+   - df.info(): Summary of DataFrame.
+   - df.describe(): Statistical summary.
+   - df.shape: Get dimensions (rows, columns).
+   - df.columns: List of column names.
+   - df.dtypes: Data types of columns.
+
+5. Selecting Data
+   - df["column"]: Select a column.
+   - df[["col1", "col2"]]: Select multiple columns.
+   - df.loc[row_index, col_index]: Select by labels.
+   - df.iloc[row_index, col_index]: Select by integer positions.
+   - df.at[row, col]: Fast access by label.
+   - df.iat[row, col]: Fast access by position.
+
+6. Filtering Data
+   - df[df["Age"] > 25]: Filter rows by condition.
+   - df.query("Age > 25"): Query using expression.
+   - df.dropna(): Remove missing values.
+   - df.fillna(value): Fill missing values.
+
+7. Modifying Data
+   - df["new_col"] = values: Add new column.
+   - df.drop("col", axis=1): Drop a column.
+   - df.rename(columns={"old": "new"}): Rename columns.
+   - df.sort_values("col"): Sort by column.
+   - df.sort_index(): Sort by index.
+   - df.reset_index(): Reset index.
+
+8. Grouping and Aggregation
+   - df.groupby("col").mean(): Group by column and compute mean.
+   - df.groupby(["col1", "col2"]).sum(): Group by multiple columns.
+   - df.agg({"col1": "mean", "col2": "sum"}): Aggregate with multiple functions.
+
+9. Merging and Joining
+   - pd.concat([df1, df2]): Concatenate DataFrames.
+   - pd.merge(df1, df2, on="col"): Merge DataFrames on a column.
+   - df.join(other_df): Join DataFrames by index.
+
+10. Input/Output Methods
+   - df.to_csv("file.csv"): Save DataFrame to CSV.
+   - df.to_excel("file.xlsx"): Save DataFrame to Excel.
+   - df.to_sql("table", connection): Save DataFrame to SQL table.
+
+11. Syntax Examples
+   - import pandas as pd
+   - df = pd.read_csv("data.csv")
+   - print(df.head())
+   - filtered = df[df["Age"] > 25]
+   - grouped = df.groupby("Department")["Salary"].mean()
+   - df.to_excel("output.xlsx")
+
+12. Summary
+   - Pandas provides powerful tools for data loading, cleaning, transformation, and analysis.
+   - Series = 1D labeled data, DataFrame = 2D labeled data.
+   - Essential for data science, analytics, and machine learning workflows.
+
+======================================================
+JOINS IN PANDAS - COMPLETE NOTES
+
+1. Introduction
+   - Joins in Pandas allow combining two DataFrames based on common keys or indices.
+   - Similar to SQL joins: inner, left, right, and outer.
+   - Implemented using pd.merge() or DataFrame.join().
+
+2. Common Join Types
+   - INNER JOIN: Keep only matching rows from both DataFrames.
+   - LEFT JOIN: Keep all rows from the left DataFrame, match with right where possible.
+   - RIGHT JOIN: Keep all rows from the right DataFrame, match with left where possible.
+   - OUTER JOIN: Keep all rows from both DataFrames, fill missing values with NaN.
+
+3. Syntax with pd.merge()
+   - pd.merge(df1, df2, on="key", how="inner")
+   - Parameters:
+     * df1, df2: DataFrames to join
+     * on: Column name(s) to join on
+     * how: Type of join ("inner", "left", "right", "outer")
+
+   - Example:
+       df1 = pd.DataFrame({"id": [1,2,3], "name": ["A","B","C"]})
+       df2 = pd.DataFrame({"id": [2,3,4], "score": [90,80,70]})
+       result = pd.merge(df1, df2, on="id", how="inner")
+
+4. Syntax with DataFrame.join()
+   - df1.join(df2, how="left", on="key")
+   - Typically used when joining on index.
+   - Example:
+       df1 = pd.DataFrame({"score": [90,80]}, index=["A","B"])
+       df2 = pd.DataFrame({"age": [25,30]}, index=["A","B"])
+       result = df1.join(df2)
+
+5. Key Parameters
+   - on: Column(s) to join on.
+   - left_on, right_on: Different column names in left and right DataFrames.
+   - left_index, right_index: Use index instead of columns for joining.
+   - suffixes: Add suffixes to overlapping column names.
+
+6. Examples
+   - Inner Join:
+       pd.merge(df1, df2, on="id", how="inner")
+   - Left Join:
+       pd.merge(df1, df2, on="id", how="left")
+   - Right Join:
+       pd.merge(df1, df2, on="id", how="right")
+   - Outer Join:
+       pd.merge(df1, df2, on="id", how="outer")
+
+7. Best Practices
+   - Ensure join keys are unique or handle duplicates carefully.
+   - Use suffixes to avoid column name conflicts.
+   - Prefer merge() for flexible joins, join() for index-based joins.
+   - Check result with df.info() or df.head() to confirm join behavior.
+
+8. Summary
+   - Pandas supports SQL-style joins using merge() and join().
+   - Types: inner, left, right, outer.
+   - merge() is more flexible, join() is simpler for index-based joins.
+   - Joins are essential for combining datasets in data analysis workflows.

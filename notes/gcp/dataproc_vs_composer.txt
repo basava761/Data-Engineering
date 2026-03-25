@@ -1,0 +1,55 @@
+GCP DATAPROC vs CLOUD COMPOSER (Simple Explanation)
+
+1.  What is Dataproc? Dataproc is a service used to run big data
+    processing tools like Apache Spark and Hadoop. It helps you process
+    large datasets quickly.
+
+Why we need Dataproc: - To process huge amounts of data (Big Data) - To
+run Spark jobs (ETL, batch processing) - To analyze logs, transactions,
+or streaming data
+
+Example: If you have 1 TB of data and want to clean and transform it →
+use Dataproc.
+
+2.  What is Cloud Composer? Cloud Composer is a workflow orchestration
+    service based on Apache Airflow. It is used to schedule, manage, and
+    automate tasks.
+
+Why we need Composer: - To automate workflows (pipelines) - To manage
+dependencies between tasks - To schedule jobs (daily, hourly, etc.)
+
+Example: Run Dataproc job → then load data to BigQuery → then send email
+→ Composer handles this flow.
+
+3.  Key Difference
+
+Dataproc: - Purpose: Data Processing - Tool: Spark, Hadoop - Role:
+Executes heavy data jobs
+
+Composer: - Purpose: Workflow Management - Tool: Apache Airflow - Role:
+Orchestrates tasks (controls flow)
+
+4.  Simple Analogy
+
+Dataproc = Worker (does the actual work) Composer = Manager (tells when
+and how work should happen)
+
+5.  When to Use What
+
+Use Dataproc when: - You need to process big data - You run Spark or
+Hadoop jobs
+
+Use Composer when: - You want to automate pipelines - You need
+scheduling and monitoring
+
+6.  How They Work Together
+
+Composer can trigger Dataproc jobs.
+
+Flow: Composer → triggers Dataproc → processes data → stores result
+
+7.  Summary
+
+Dataproc = Processing engine Composer = Workflow scheduler
+
+Both are used together in Data Engineering pipelines.

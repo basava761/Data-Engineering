@@ -1,0 +1,22 @@
+RULES FOR USING AIRFLOW OPERATORS
+
+1. PythonOperator
+   - Must always include the argument: python_callable=<function_name>
+   - Define the function outside the DAG context block
+   - Use op_args (list) or op_kwargs (dict) to pass parameters into the function
+   - The function’s return value is automatically pushed to XComs
+   - Keep functions lightweight; avoid heavy imports inside them
+
+2. BashOperator
+   - Must always include the argument: bash_command="<shell command>"
+   - Commands run in the worker’s shell environment
+   - Ensure the command exists on the system (e.g., ls, date)
+   - Standard output is captured in logs
+   - Return values are not automatically pushed to XComs
+
+3. General Rules
+   - Use PythonOperator for Python logic (data processing, API calls, file handling)
+   - Use BashOperator for shell commands (system utilities, scripts, CLI tools)
+   - Always provide the required arguments (python_callable for PythonOperator, bash_command for BashOperator)
+   - Define task dependencies explicitly using >> or << operators
+   - Keep tasks small and focused; one operator should do one clear job

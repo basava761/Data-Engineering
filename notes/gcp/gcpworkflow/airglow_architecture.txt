@@ -1,0 +1,190 @@
+AIRFLOW ARCHITECTURE - DETAILED NOTES (WITH FLOW DIAGRAM)
+=======================================================
+
+--------------------------------------------------
+1. OVERVIEW
+--------------------------------------------------
+
+Apache Airflow is a workflow orchestration tool.
+
+Main idea:
+User creates DAG → Airflow schedules tasks → Executor runs tasks → Workers execute them
+
+--------------------------------------------------
+2. FLOW DIAGRAM (VERY IMPORTANT)
+--------------------------------------------------
+
+                +------------------+
+                |      USER        |
+                +--------+---------+
+                         |
+                         v
+                +------------------+
+                |       DAG        |
+                +--------+---------+
+                         |
+                         v
+                +------------------+
+                |   WEB SERVER     |
+                | (UI Monitoring)  |
+                +--------+---------+
+                         |
+                         v
+                +------------------+
+                |    SCHEDULER     |
+                | (Brain of system)|
+                +--------+---------+
+                         |
+                         v
+                +------------------+
+                |      QUEUE       |
+                | (Task waiting)   |
+                +--------+---------+
+                         |
+                         v
+                +------------------+
+                |     EXECUTOR     |
+                | (Execution logic)|
+                +--------+---------+
+                         |
+                         v
+                +------------------+
+                |     WORKERS      |
+                | (Task execution) |
+                +--------+---------+
+                         |
+                         v
+                +------------------+
+                |  METADATA DB     |
+                | (Stores state)   |
+                +------------------+
+
+NOTE:
+Web Server also reads from Metadata DB to display status.
+
+
+--------------------------------------------------
+3. COMPONENTS EXPLANATION
+--------------------------------------------------
+
+1. DAG (Directed Acyclic Graph)
+- Defines workflow structure
+- Contains tasks and dependencies
+
+----------------------------------
+
+2. Web Server
+- Provides UI
+- Used for:
+  - Monitoring DAGs
+  - Triggering runs
+  - Viewing logs
+
+----------------------------------
+
+3. Scheduler (MOST IMPORTANT)
+- Reads DAGs
+- Decides:
+  - Which task to run
+  - When to run
+- Pushes tasks to Queue
+
+----------------------------------
+
+4. Queue
+- Temporary holding area
+- Stores tasks before execution
+
+----------------------------------
+
+5. Metadata Database
+- Stores:
+  - DAG runs
+  - Task status
+  - Logs
+- Central storage of Airflow
+
+----------------------------------
+
+6. Executor (VERY IMPORTANT)
+- Decides HOW tasks run
+- Pulls tasks from Queue
+- Sends to Workers
+
+Executor Types:
+- SequentialExecutor → single task
+- LocalExecutor → parallel local
+- CeleryExecutor → distributed
+- KubernetesExecutor → container-based
+
+----------------------------------
+
+7. Workers
+- Execute actual tasks
+- Can run multiple tasks in parallel
+
+Example:
+Worker 1 → Task A
+Worker 2 → Task B
+
+--------------------------------------------------
+4. STEP-BY-STEP FLOW
+--------------------------------------------------
+
+1. User creates DAG
+2. DAG is loaded into Airflow
+3. Scheduler scans DAG
+4. Scheduler schedules tasks
+5. Tasks are pushed to Queue
+6. Executor picks tasks
+7. Executor sends tasks to Workers
+8. Workers execute tasks
+9. Results stored in Metadata DB
+10. Web UI shows results
+
+--------------------------------------------------
+5. KEY INTERVIEW POINTS
+--------------------------------------------------
+
+- Scheduler = decides WHEN
+- Executor = decides HOW
+- Worker = does actual work
+
+- Queue separates scheduling and execution
+- Metadata DB is central storage
+
+--------------------------------------------------
+6. REAL-WORLD ANALOGY
+--------------------------------------------------
+
+User = Manager
+Scheduler = Planner
+Executor = Dispatcher
+Workers = Employees
+
+--------------------------------------------------
+7. IMPORTANT NOTE
+--------------------------------------------------
+
+Airflow does NOT process data.
+
+It only:
+- Schedules
+- Orchestrates
+- Monitors
+
+Actual processing tools:
+- Dataproc
+- Spark
+- BigQuery
+
+--------------------------------------------------
+8. FINAL SUMMARY
+--------------------------------------------------
+
+Flow:
+User → DAG → Scheduler → Queue → Executor → Workers → DB → UI
+
+Airflow = Orchestrator (not processor)
+
+END OF NOTES

@@ -1,0 +1,379 @@
+GCP STUDY MATERIAL: DATAPROC vs CLOUD COMPOSER
+============================================
+
+--------------------------------------------------
+1. GOOGLE CLOUD DATAPROC (DETAILED NOTES)
+--------------------------------------------------
+
+Definition:
+Dataproc is a managed cloud service that allows you to run big data tools like Apache Spark, Hadoop, Hive, and Pig.
+
+Core Purpose:
+To process large-scale data using distributed computing.
+
+Key Features:
+- Fully managed clusters
+- Fast cluster startup (~90 seconds)
+- Autoscaling support
+- Integration with GCS, BigQuery, Pub/Sub
+- Supports open-source tools
+
+Architecture (Flow):
+User → Submit Job → Dataproc Cluster → Worker Nodes → Output (GCS / BigQuery)
+
+Main Components:
+1. Cluster
+   - Master Node: Controls the cluster
+   - Worker Nodes: Execute tasks
+
+2. Jobs
+   - Spark jobs
+   - Hadoop jobs
+
+3. Initialization Actions
+   - Scripts executed during cluster creation
+
+Types of Processing:
+- Batch Processing (most common)
+- Streaming (using Spark Streaming)
+
+Common Use Cases:
+- ETL pipelines
+- Log processing
+- Data transformation
+- Machine learning preprocessing
+
+Example:
+Raw logs → Clean & transform → Store in BigQuery
+
+Advantages:
+- Cost-effective (pay per use)
+- Easy to set up
+- Supports existing Spark/Hadoop code
+
+Limitations:
+- Requires cluster management
+- Not fully serverless (unless using Dataproc Serverless)
+
+Important Commands:
+gcloud dataproc clusters create
+gcloud dataproc jobs submit spark
+gcloud dataproc clusters delete
+
+
+--------------------------------------------------
+2. CLOUD COMPOSER (DETAILED NOTES)
+--------------------------------------------------
+
+Definition:
+Cloud Composer is a managed workflow orchestration service built on Apache Airflow.
+
+Core Purpose:
+To schedule, automate, and monitor workflows (data pipelines).
+
+Key Features:
+- DAG-based workflow design
+- Task scheduling
+- Monitoring via Airflow UI
+- Integration with GCP services
+
+Architecture (Flow):
+User → DAG → Airflow Scheduler → Workers → Execute Tasks
+
+Main Components:
+1. DAG (Directed Acyclic Graph)
+   - Defines workflow structure
+
+2. Tasks
+   - Individual steps in workflow
+
+3. Operators
+   - Predefined actions (DataprocOperator, BigQueryOperator, etc.)
+
+4. Scheduler
+   - Decides when tasks run
+
+5. Web UI
+   - Monitor and manage pipelines
+
+Types of Workflows:
+- Batch pipelines
+- ETL orchestration
+- Data movement pipelines
+
+Common Use Cases:
+- Automating data pipelines
+- Scheduling Spark jobs
+- Managing task dependencies
+
+Example Workflow:
+Step 1: Run Dataproc job
+Step 2: Load data into BigQuery
+Step 3: Send email notification
+
+Advantages:
+- Fully managed Airflow
+- Easy monitoring and debugging
+- Scalable
+
+Limitations:
+- Cannot process data itself
+- Requires understanding of DAG concepts
+
+
+--------------------------------------------------
+3. KEY DIFFERENCES
+--------------------------------------------------
+
+Dataproc:
+- Role: Data Processing Engine
+- Executes heavy data jobs
+- Uses Spark and Hadoop
+
+Composer:
+- Role: Workflow Orchestrator
+- Manages pipeline flow
+- Uses Apache Airflow
+
+Comparison Summary:
+Dataproc = Executes tasks (Worker)
+Composer = Controls tasks (Manager)
+
+
+--------------------------------------------------
+4. HOW THEY WORK TOGETHER
+--------------------------------------------------
+
+Typical Pipeline Flow:
+
+1. Cloud Composer triggers a Dataproc job
+2. Dataproc processes the data
+3. Output is stored in BigQuery or GCS
+4. Composer triggers next tasks based on workflow
+
+
+--------------------------------------------------
+5. REAL-WORLD ARCHITECTURE
+--------------------------------------------------
+
+Data Source → GCS → Dataproc → BigQuery
+                    ↑
+             Controlled by Composer
+
+
+--------------------------------------------------
+6. INTERVIEW QUESTIONS
+--------------------------------------------------
+
+Q1: What is the difference between Dataproc and Composer?
+A: Dataproc processes data, Composer orchestrates workflows.
+
+Q2: Can Composer process data?
+A: No, it only schedules and manages tasks.
+
+Q3: Why use Dataproc instead of BigQuery?
+A: For complex transformations, Spark jobs, and distributed processing.
+
+Q4: What is a DAG?
+A: A Directed Acyclic Graph that defines workflow in Airflow.
+
+
+--------------------------------------------------
+7. FINAL SUMMARY
+--------------------------------------------------
+
+- Dataproc = Processing Engine (does the actual work)
+- Composer = Workflow Scheduler (controls when and how work happens)
+- Both are essential in real-world data engineering pipelines
+
+END OF NOTES
+
+GCP STUDY MATERIAL: DATAPROC vs CLOUD COMPOSER
+============================================
+
+--------------------------------------------------
+1. GOOGLE CLOUD DATAPROC (DETAILED NOTES)
+--------------------------------------------------
+
+Definition:
+Dataproc is a managed cloud service that allows you to run big data tools like Apache Spark, Hadoop, Hive, and Pig.
+
+Core Purpose:
+To process large-scale data using distributed computing.
+
+Key Features:
+- Fully managed clusters
+- Fast cluster startup (~90 seconds)
+- Autoscaling support
+- Integration with GCS, BigQuery, Pub/Sub
+- Supports open-source tools
+
+Architecture (Flow):
+User → Submit Job → Dataproc Cluster → Worker Nodes → Output (GCS / BigQuery)
+
+Main Components:
+1. Cluster
+   - Master Node: Controls the cluster
+   - Worker Nodes: Execute tasks
+
+2. Jobs
+   - Spark jobs
+   - Hadoop jobs
+
+3. Initialization Actions
+   - Scripts executed during cluster creation
+
+Types of Processing:
+- Batch Processing (most common)
+- Streaming (using Spark Streaming)
+
+Common Use Cases:
+- ETL pipelines
+- Log processing
+- Data transformation
+- Machine learning preprocessing
+
+Example:
+Raw logs → Clean & transform → Store in BigQuery
+
+Advantages:
+- Cost-effective (pay per use)
+- Easy to set up
+- Supports existing Spark/Hadoop code
+
+Limitations:
+- Requires cluster management
+- Not fully serverless (unless using Dataproc Serverless)
+
+Important Commands:
+gcloud dataproc clusters create
+gcloud dataproc jobs submit spark
+gcloud dataproc clusters delete
+
+
+--------------------------------------------------
+2. CLOUD COMPOSER (DETAILED NOTES)
+--------------------------------------------------
+
+Definition:
+Cloud Composer is a managed workflow orchestration service built on Apache Airflow.
+
+Core Purpose:
+To schedule, automate, and monitor workflows (data pipelines).
+
+Key Features:
+- DAG-based workflow design
+- Task scheduling
+- Monitoring via Airflow UI
+- Integration with GCP services
+
+Architecture (Flow):
+User → DAG → Airflow Scheduler → Workers → Execute Tasks
+
+Main Components:
+1. DAG (Directed Acyclic Graph)
+   - Defines workflow structure
+
+2. Tasks
+   - Individual steps in workflow
+
+3. Operators
+   - Predefined actions (DataprocOperator, BigQueryOperator, etc.)
+
+4. Scheduler
+   - Decides when tasks run
+
+5. Web UI
+   - Monitor and manage pipelines
+
+Types of Workflows:
+- Batch pipelines
+- ETL orchestration
+- Data movement pipelines
+
+Common Use Cases:
+- Automating data pipelines
+- Scheduling Spark jobs
+- Managing task dependencies
+
+Example Workflow:
+Step 1: Run Dataproc job
+Step 2: Load data into BigQuery
+Step 3: Send email notification
+
+Advantages:
+- Fully managed Airflow
+- Easy monitoring and debugging
+- Scalable
+
+Limitations:
+- Cannot process data itself
+- Requires understanding of DAG concepts
+
+
+--------------------------------------------------
+3. KEY DIFFERENCES
+--------------------------------------------------
+
+Dataproc:
+- Role: Data Processing Engine
+- Executes heavy data jobs
+- Uses Spark and Hadoop
+
+Composer:
+- Role: Workflow Orchestrator
+- Manages pipeline flow
+- Uses Apache Airflow
+
+Comparison Summary:
+Dataproc = Executes tasks (Worker)
+Composer = Controls tasks (Manager)
+
+
+--------------------------------------------------
+4. HOW THEY WORK TOGETHER
+--------------------------------------------------
+
+Typical Pipeline Flow:
+
+1. Cloud Composer triggers a Dataproc job
+2. Dataproc processes the data
+3. Output is stored in BigQuery or GCS
+4. Composer triggers next tasks based on workflow
+
+
+--------------------------------------------------
+5. REAL-WORLD ARCHITECTURE
+--------------------------------------------------
+
+Data Source → GCS → Dataproc → BigQuery
+                    ↑
+             Controlled by Composer
+
+
+--------------------------------------------------
+6. INTERVIEW QUESTIONS
+--------------------------------------------------
+
+Q1: What is the difference between Dataproc and Composer?
+A: Dataproc processes data, Composer orchestrates workflows.
+
+Q2: Can Composer process data?
+A: No, it only schedules and manages tasks.
+
+Q3: Why use Dataproc instead of BigQuery?
+A: For complex transformations, Spark jobs, and distributed processing.
+
+Q4: What is a DAG?
+A: A Directed Acyclic Graph that defines workflow in Airflow.
+
+
+--------------------------------------------------
+7. FINAL SUMMARY
+--------------------------------------------------
+
+- Dataproc = Processing Engine (does the actual work)
+- Composer = Workflow Scheduler (controls when and how work happens)
+- Both are essential in real-world data engineering pipelines
+
+END OF NOTES

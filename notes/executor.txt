@@ -1,0 +1,66 @@
+AIRFLOW EXECUTORS - COMPLETE NOTES
+
+1. Introduction
+   - Executors in Airflow define how tasks are run.
+   - They determine whether tasks run locally, in parallel, or distributed across multiple machines.
+   - Choosing the right executor is critical for scaling and performance.
+
+2. Types of Executors
+
+   a) SequentialExecutor
+      - Runs one task at a time.
+      - Useful for testing or very small setups.
+      - Default executor when using SQLite as the metadata database.
+
+   b) LocalExecutor
+      - Runs tasks in parallel on the same machine.
+      - Uses multiprocessing to execute tasks.
+      - Suitable for small to medium workloads on a single server.
+
+   c) CeleryExecutor
+      - Distributed executor using Celery workers.
+      - Tasks are sent to workers via message broker (e.g., RabbitMQ, Redis).
+      - Supports queues for routing tasks to specific workers.
+      - Best for large-scale, distributed environments.
+
+   d) KubernetesExecutor
+      - Runs each task in its own Kubernetes pod.
+      - Provides strong isolation and scalability.
+      - Ideal for cloud-native deployments.
+      - Supports dynamic resource allocation.
+
+   e) DaskExecutor (less common)
+      - Uses Dask for parallel computing.
+      - Suitable for specialized distributed workloads.
+
+   f) DebugExecutor
+      - Runs tasks synchronously in the same process.
+      - Useful for debugging DAGs.
+
+3. Why Executors Are Important
+   - Control scalability: from single-machine to distributed clusters.
+   - Provide flexibility: choose executor based on workload and infrastructure.
+   - Enable isolation: KubernetesExecutor isolates tasks in separate pods.
+   - Support parallelism: LocalExecutor and CeleryExecutor allow multiple tasks at once.
+
+4. How Executors Work
+   - The executor is defined in the Airflow configuration (airflow.cfg).
+   - Example:
+       executor = LocalExecutor
+   - When a DAG is triggered, the scheduler sends tasks to the executor.
+   - The executor decides how and where tasks are run.
+
+5. Best Practices
+   - Use SequentialExecutor for testing only.
+   - Use LocalExecutor for small setups with moderate parallelism.
+   - Use CeleryExecutor for distributed, production-grade workloads.
+   - Use KubernetesExecutor for cloud-native, containerized environments.
+   - Monitor executor performance using Airflow UI and logs.
+
+6. Summary
+   - Executors are the "engine" that runs tasks in Airflow.
+   - SequentialExecutor = single task at a time.
+   - LocalExecutor = parallel tasks on one machine.
+   - CeleryExecutor = distributed tasks across workers.
+   - KubernetesExecutor = tasks in isolated pods.
+   - Choose executor based on scale, infrastructure, and workload requirements.

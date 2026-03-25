@@ -1,0 +1,121 @@
+Google BigQuery Notes
+=====================
+
+1. Project
+-----------
+- Top-level container in Google Cloud.
+- All datasets, tables, and views live inside a project.
+Example:
+  SELECT * FROM `my_project.my_dataset.my_table`;
+
+2. Dataset
+-----------
+- Logical container for tables and views (like a schema).
+Example:
+  bq mk my_dataset
+
+3. Table
+---------
+- Stores structured data in rows and columns.
+- Types: Native tables (inside BigQuery), External tables (linked to GCS, etc.)
+Example:
+  bq mk --table my_dataset.my_table name:STRING age:INTEGER
+
+4. View
+--------
+- Virtual table defined by a SQL query.
+- Useful for simplifying queries or restricting access.
+Example:
+  CREATE VIEW my_dataset.my_view AS
+  SELECT name, age FROM my_dataset.my_table WHERE age > 18;
+
+5. Query
+---------
+- SQL statements used to analyze data.
+Example:
+  SELECT COUNT(*) FROM `my_project.my_dataset.my_table` WHERE age > 30;
+
+6. Job
+-------
+- Any action in BigQuery (query, load, export, copy).
+- Running a query creates a query job.
+
+7. Schema
+----------
+- Defines the structure of a table (columns and types).
+Example:
+  bq mk --table my_dataset.sales id:INTEGER product:STRING price:FLOAT
+
+8. Partitioning & Clustering
+------------------------------
+- Partitioning: Breaks tables into segments (e.g., by date).
+- Clustering: Organizes data by column values for faster queries.
+Example:
+  CREATE TABLE my_dataset.logs
+  PARTITION BY DATE(timestamp)
+  CLUSTER BY user_id AS
+  SELECT * FROM source_table;
+
+9. Access Control (IAM)
+------------------------
+- Permissions managed at project, dataset, or table level.
+- Example: Grant read-only access to a dataset.
+
+10. Integrations
+-----------------
+- Works with Google Cloud Storage, Dataflow, Pub/Sub, Looker Studio, AI/ML tools.
+Example: Load CSV from Cloud Storage
+  bq load --source_format=CSV my_dataset.my_table gs://my_bucket/data.csv
+  ========================================
+Google BigQuery Service Notes
+=============================
+
+Overview
+--------
+BigQuery is a fully managed, serverless cloud data warehouse provided by Google Cloud.
+It is designed for large-scale analytics, enabling fast SQL queries on massive datasets.
+
+Key Characteristics
+-------------------
+- Serverless: No infrastructure management required.
+- Massively Scalable: Handles terabytes to petabytes of data seamlessly.
+- SQL Interface: Familiar syntax for analysts and developers.
+- Pay-as-you-go Pricing: Charges based on data scanned and storage used.
+- Built-in ML: BigQuery ML allows training and using machine learning models with SQL.
+- Integration: Works with Google Cloud Storage, Pub/Sub, Dataflow, Looker Studio, and external sources.
+- Security: Fine-grained IAM controls, encryption by default.
+- Supports Semi-structured Data: JSON, nested and repeated fields (STRUCT, ARRAY).
+
+Pros
+----
+1. Speed: Queries billions of rows in seconds.
+2. Scalability: Automatically scales without manual tuning.
+3. Ease of Use: SQL-based, low learning curve.
+4. Flexibility: Handles structured, semi-structured, and external data.
+5. Advanced Analytics: Geospatial functions, ML, BI integrations.
+6. Security: Strong IAM and encryption.
+7. Minimal Ops Overhead: No servers or clusters to manage.
+
+Cons
+----
+1. Cost Unpredictability: Queries billed by data scanned; inefficient queries can be expensive.
+2. Not Transactional: Designed for analytics, not OLTP (transaction processing).
+3. Limited Infrastructure Control: Serverless model restricts customization.
+4. Optimization Required: Partitioning, clustering, and schema design are critical to avoid high costs.
+5. Streaming Latency: Real-time ingestion possible but slower than specialized streaming databases.
+
+Why Choose BigQuery?
+--------------------
+- Best for organizations needing analytics at scale (terabytes/petabytes).
+- Ideal for cloud-native workflows with Google Cloud ecosystem.
+- Cost-effective for variable workloads due to pay-as-you-go model.
+- AI-ready platform with built-in ML and advanced analytics.
+- Reduces operational burden with serverless architecture.
+
+Summary
+-------
+BigQuery is chosen when speed, scalability, and integration matter more than
+transactional capabilities or fine-grained infrastructure control. It is a
+powerful service for enterprises that want to focus on insights rather than
+managing data warehouse infrastructure.
+

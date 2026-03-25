@@ -1,0 +1,175 @@
+[ Developer ] 
+     |
+     v
+[ Docker ] ---> Builds container image ---> [ Container Registry ]
+                                                   |
+                                                   v
+                                          [ Kubernetes Cluster ]
+                                          /        |        \
+                                 [ Node1 ]   [ Node2 ]   [ Node3 ]
+                                    |           |           |
+                                [Pod(s)]    [Pod(s)]    [Pod(s)]
+DOCKER + KUBERNETES WORKFLOW
+============================
+
+1. APPLICATION DEVELOPMENT
+   - A developer writes code for an application.
+   - Dependencies, libraries, and runtime requirements are identified.
+
+2. DOCKER IMAGE CREATION
+   - A Dockerfile is written to define how the application should be packaged.
+   - Using 'docker build', the application is turned into a Docker image.
+   - This image contains the app + all dependencies, ensuring consistency.
+
+3. IMAGE STORAGE
+   - The Docker image is pushed to a container registry (e.g., Docker Hub, AWS ECR, GCP Artifact Registry).
+   - The registry acts like a warehouse storing ready-to-use images.
+
+4. KUBERNETES DEPLOYMENT
+   - Kubernetes is given instructions (YAML manifest) describing:
+       * Which image to use
+       * How many replicas (pods) to run
+       * Networking rules (services, ingress)
+       * Storage requirements (volumes)
+   - 'kubectl apply -f deployment.yaml' is used to submit this configuration.
+
+5. SCHEDULING & ORCHESTRATION
+   - Kubernetes checks available nodes in the cluster.
+   - It schedules pods (containers) across nodes for load balancing and efficiency.
+   - Each pod runs one or more containers based on the Docker image.
+
+6. CLUSTER MANAGEMENT
+   - Kubernetes continuously monitors the health of pods.
+   - If a pod fails, Kubernetes automatically restarts or reschedules it.
+   - Scaling is handled automatically (Horizontal Pod Autoscaler).
+
+7. NETWORKING & SERVICE DISCOVERY
+   - Kubernetes assigns each pod an internal IP.
+   - Services expose pods to other pods or external users.
+   - Load balancing distributes traffic across multiple replicas.
+
+8. STORAGE & CONFIGURATION
+   - Persistent Volumes (PV) and Persistent Volume Claims (PVC) provide durable storage.
+   - ConfigMaps and Secrets inject configuration and sensitive data into pods.
+
+9. MONITORING & LOGGING
+   - Kubernetes integrates with tools like Prometheus, Grafana, and ELK stack.
+   - Logs can be viewed using 'kubectl logs <pod-name>'.
+
+10. CONTINUOUS DELIVERY
+    - CI/CD pipelines automate building Docker images and deploying them to Kubernetes.
+    - This ensures rapid, reliable updates with minimal downtime.
+
+SUMMARY
+-------
+- Docker is responsible for PACKAGING applications into containers.
+- Kubernetes is responsible for RUNNING, MANAGING, and SCALING those containers.
+- Together, they provide a complete ecosystem for modern cloud-native applications.
+
+DOCKER COMMANDS
+===============
+
+1. docker --version
+   Shows the installed Docker version.
+
+2. docker pull <image>
+   Downloads an image from Docker Hub or another registry.
+
+3. docker images
+   Lists all images stored locally.
+
+4. docker run -d -p <host-port>:<container-port> <image>
+   Runs a container in detached mode and maps ports.
+
+5. docker ps
+   Lists running containers.
+
+6. docker ps -a
+   Lists all containers (running + stopped).
+
+7. docker stop <container-id>
+   Stops a running container.
+
+8. docker rm <container-id>
+   Removes a stopped container.
+
+9. docker rmi <image-id>
+   Removes an image from local storage.
+
+10. docker logs <container-id>
+    Shows logs of a container.
+
+11. docker exec -it <container-id> /bin/bash
+    Opens an interactive shell inside a running container.
+
+12. docker build -t <image-name>:<tag> .
+    Builds a Docker image from a Dockerfile in the current directory.
+
+
+KUBERNETES (kubectl) COMMANDS
+=============================
+
+1. kubectl version
+   Shows client and server version info.
+
+2. kubectl cluster-info
+   Displays cluster details.
+
+3. kubectl get nodes
+   Lists all nodes in the cluster.
+
+4. kubectl get pods
+   Lists all pods in the current namespace.
+
+5. kubectl get pods --all-namespaces
+   Lists pods across all namespaces.
+
+6. kubectl describe pod <pod-name>
+   Shows detailed information about a specific pod.
+
+7. kubectl logs <pod-name>
+   Displays logs from a pod.
+
+8. kubectl exec -it <pod-name> -- /bin/bash
+   Opens an interactive shell inside a pod.
+
+9. kubectl create deployment <name> --image=<image>
+   Creates a deployment using a specific container image.
+
+10. kubectl get deployments
+    Lists all deployments.
+
+11. kubectl scale deployment <name> --replicas=<count>
+    Scales a deployment up or down.
+
+12. kubectl rollout status deployment/<name>
+    Shows the rollout status of a deployment.
+
+13. kubectl rollout undo deployment/<name>
+    Rolls back to the previous deployment version.
+
+14. kubectl get services
+    Lists all services in the namespace.
+
+15. kubectl expose deployment <name> --type=LoadBalancer --port=<port>
+    Exposes a deployment as a service.
+
+16. kubectl port-forward <pod-name> <local-port>:<pod-port>
+    Forwards local traffic to a pod.
+
+17. kubectl get namespaces
+    Lists all namespaces.
+
+18. kubectl create namespace <name>
+    Creates a new namespace.
+
+19. kubectl delete namespace <name>
+    Deletes a namespace.
+
+20. kubectl apply -f <file.yaml>
+    Applies configuration from a YAML file.
+
+SUMMARY
+-------
+- Docker is used to BUILD and RUN containers.
+- Kubernetes (kubectl) is used to MANAGE and ORCHESTRATE those containers in a cluster.
