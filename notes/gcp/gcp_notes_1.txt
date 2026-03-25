@@ -1,0 +1,23 @@
+REAL GCP ARCHITECTURE (INTERVIEW-READY)
+
+1.  OVERVIEW End-to-end pipeline using GCP services.
+
+2.  ARCHITECTURE FLOW Data Source → Pub/Sub → GCS → Dataproc/Dataflow →
+    BigQuery → Looker ↑ Composer (Orchestration)
+
+3.  COMPONENTS
+
+-   Pub/Sub: ingestion
+-   GCS: storage (data lake)
+-   Dataproc/Dataflow: processing
+-   BigQuery: warehouse
+-   Composer: orchestration
+-   Looker: visualization
+
+4.  KEY POINTS
+
+-   Scalable
+-   Serverless where possible
+-   Decoupled systems
+
+5.  INTERVIEW TIP Explain flow clearly with roles of each service.

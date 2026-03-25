@@ -1,0 +1,25 @@
+PROJECT FOR RESUME (GCP DATA ENGINEERING)
+
+PROJECT: Real-Time ETL Pipeline
+
+1.  PROBLEM Process user activity data in real time.
+
+2.  ARCHITECTURE App → Pub/Sub → Dataflow → BigQuery → Dashboard
+
+3.  IMPLEMENTATION
+
+-   Pub/Sub topic creation
+-   Dataflow pipeline (Apache Beam)
+-   BigQuery tables
+-   Composer for scheduling
+
+4.  FEATURES
+
+-   Real-time ingestion
+-   Scalable processing
+-   Automated workflows
+
+5.  TOOLS USED GCP: Pub/Sub, Dataflow, BigQuery, Composer
+
+6.  RESUME POINT Built scalable real-time pipeline using GCP services
+    handling large data.

@@ -1,0 +1,44 @@
+SCENARIO-BASED QUESTIONS (DATA LIFECYCLE)
+
+1.  What if data is delayed?
+
+-   Use sensors in Airflow
+-   Add retry logic
+
+2.  What if job fails?
+
+-   Use retries
+-   Logging & alerts
+
+3.  Large data processing?
+
+-   Use Dataproc or Dataflow
+
+4.  Real-time requirement?
+
+-   Use Pub/Sub + Dataflow
+
+5.  Cost optimization?
+
+-   Use serverless
+-   Delete clusters
+
+6.  Data quality issues?
+
+-   Add validation checks
+
+7.  Dependency between pipelines?
+
+-   Use TriggerDagRunOperator
+
+8.  Scaling issue?
+
+-   Autoscaling or Kubernetes
+
+9.  Security?
+
+-   IAM roles, encryption
+
+10. Monitoring?
+
+-   Cloud Monitoring + Airflow UI
