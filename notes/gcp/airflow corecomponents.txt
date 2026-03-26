@@ -1,0 +1,167 @@
+AIRFLOW CORE COMPONENTS - DETAILED NOTES
+=======================================
+
+Components:
+1. Webserver
+2. Scheduler
+3. Metadata Database
+4. Executor
+5. Workers
+
+--------------------------------------------------
+1. WEBSERVER
+--------------------------------------------------
+
+What it is:
+- UI of Airflow (Graphical Interface)
+
+What it does:
+- Displays DAGs
+- Shows task status (success, failed, running)
+- Allows manual trigger of DAGs
+- Shows logs of tasks
+
+Why we need it:
+- To monitor pipelines
+- To debug failures
+- To manage workflows visually
+
+Example:
+You open Airflow UI → see DAG status → click task → view logs
+
+👉 Think:
+Webserver = "Dashboard / Control Panel"
+
+--------------------------------------------------
+2. SCHEDULER (MOST IMPORTANT)
+--------------------------------------------------
+
+What it is:
+- Brain of Airflow
+
+What it does:
+- Reads DAG files
+- Decides when tasks should run
+- Checks dependencies between tasks
+- Sends tasks to executor
+
+Why we need it:
+- To automate workflow execution
+- To ensure correct order of tasks
+
+Example:
+Task B runs only after Task A → Scheduler enforces this
+
+👉 Think:
+Scheduler = "Planner / Decision maker"
+
+--------------------------------------------------
+3. METADATA DATABASE
+--------------------------------------------------
+
+What it is:
+- Central storage of Airflow
+
+What it stores:
+- DAG information
+- Task status (success, failed)
+- Execution history
+- Logs metadata
+
+Why we need it:
+- To track pipeline state
+- To maintain history
+
+Example:
+When a task finishes → status saved in DB
+
+👉 Think:
+Database = "Memory of Airflow"
+
+--------------------------------------------------
+4. EXECUTOR
+--------------------------------------------------
+
+What it is:
+- Component that decides how tasks are executed
+
+What it does:
+- Receives tasks from Scheduler
+- Sends tasks to workers
+- Manages execution strategy
+
+Types:
+- SequentialExecutor → one task
+- LocalExecutor → parallel (same machine)
+- CeleryExecutor → distributed workers
+- KubernetesExecutor → runs in pods
+
+Why we need it:
+- To control execution mechanism
+- To scale pipeline
+
+👉 Think:
+Executor = "Dispatcher"
+
+--------------------------------------------------
+5. WORKERS
+--------------------------------------------------
+
+What they are:
+- Machines/processes that execute tasks
+
+What they do:
+- Run actual task logic
+- Execute code (Python, Spark, SQL)
+
+Why we need them:
+- To perform real work
+- To enable parallel processing
+
+Example:
+Worker 1 → runs Task A
+Worker 2 → runs Task B
+
+👉 Think:
+Workers = "Employees doing actual work"
+
+--------------------------------------------------
+6. COMPLETE FLOW (VERY IMPORTANT)
+--------------------------------------------------
+
+1. User creates DAG
+2. Scheduler reads DAG
+3. Scheduler decides which task to run
+4. Task sent to Executor
+5. Executor sends task to Worker
+6. Worker executes task
+7. Status saved in Metadata DB
+8. Webserver displays result
+
+--------------------------------------------------
+7. INTERVIEW SUMMARY
+--------------------------------------------------
+
+Webserver → UI  
+Scheduler → decides WHEN  
+Executor → decides HOW  
+Workers → do the work  
+Database → stores state  
+
+--------------------------------------------------
+8. FINAL UNDERSTANDING
+--------------------------------------------------
+
+Airflow is NOT a data processing tool.
+
+It is:
+- Orchestration system
+- Workflow manager
+
+Actual processing happens in:
+- Dataproc
+- Spark
+- BigQuery
+
+--------------------------------------------------
+END OF NOTES

@@ -1,0 +1,58 @@
+===========================
+VI / VIM CHEAT SHEET
+===========================
+
+--- MODES ---
+i        Insert before cursor
+a        Insert after cursor
+o        Open new line below
+O        Open new line above
+Esc      Return to command mode
+
+--- NAVIGATION ---
+h        Move left
+l        Move right
+j        Move down
+k        Move up
+w        Jump forward to start of word
+e        Jump forward to end of word
+b        Jump backward to start of word
+0        Beginning of line
+$        End of line
+Ctrl + f Page forward
+Ctrl + b Page backward
+G        Go to end of file
+gg       Go to beginning of file
+
+--- EDITING ---
+x        Delete character
+dd       Delete line
+yy       Yank (copy) line
+p        Paste after cursor
+P        Paste before cursor
+u        Undo
+Ctrl + r Redo
+cw       Change word
+cc       Change line
+
+--- SAVING & EXITING ---
+:w       Save file
+:q       Quit
+:q!      Quit without saving
+:wq      Save and quit
+ZZ       Save and quit (shortcut)
+
+--- SEARCHING ---
+/word    Search forward for "word"
+?word    Search backward for "word"
+n        Repeat search forward
+N        Repeat search backward
+
+--- REPLACE ---
+:%s/old/new/g     Replace all "old" with "new"
+:%s/old/new/gc    Replace all with confirmation
+
+--- MISC ---
+:help    Open help
+:set nu  Show line numbers
+:set nonu Hide line numbers
